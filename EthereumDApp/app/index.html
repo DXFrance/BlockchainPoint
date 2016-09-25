@@ -1,0 +1,125 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="bower_components/animate.css/animate.css">
+  <link rel="stylesheet" href="http://bootswatch.com/cosmo/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="header" class="animated flipInX">
+    <img src="/img/ms.jpg" alt="Microsoft" class="ms">
+    <i class="fa fa-heart"></i>
+    <img src="/img/bc.png" alt="BlockChain" class="bc">
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-primary" style="position: relative;">
+          <div class="loader">
+            <div>
+              <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+              <span>Identification en cours ...</span>
+            </div>
+          </div>
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-lock"></i> Identification</h3>
+          </div>
+          <div class="panel-body">
+            <div class="videoWrapper">
+              <div id="reader">
+              </div>
+            </div>
+            <p class="anonymous animated"><i class="fa fa-qrcode"></i> <span>You are currently anonymous, QR your badge to access the Blockchain !</span></p>
+            <div class="well">
+
+            </div>
+            <div class="text-center pdf"><button class="btn btn-success pdf-link"><i class="fa fa-download"></i> Get pdf link</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 np">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-exchange"></i> Transactions</h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover ">
+              <tbody>
+                <tr class="danger">
+                  <td>#25123 - <i class="fa fa-times"></i> Doler erum</td>
+                </tr>
+                <tr class="warning">
+                  <td>#25123 - <i class="fa fa-user"></i> Doler erum</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-times"></i> Doler erum</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-book"></i> Doler erum</td>
+                </tr>
+                <tr class="infos">
+                  <td>#25123 - <i class="fa fa-times"></i> Doler erum</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 np">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-users"></i> Utilisateurs</h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover ">
+              <tbody>
+                <tr>
+                  <td>#25123 - <i class="fa fa-user"></i> Sofiene Djebali</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-user"></i> Sofiene Djebali</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-user"></i> Sofiene Djebali</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-user"></i> Sofiene Djebali</td>
+                </tr>
+                <tr>
+                  <td>#25123 - <i class="fa fa-user"></i> Sofiene Djebali</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:1996/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="QR/grid.js"></script>
+  <script type="text/javascript" src="QR/version.js"></script>
+  <script type="text/javascript" src="QR/detector.js"></script>
+  <script type="text/javascript" src="QR/formatinf.js"></script>
+  <script type="text/javascript" src="QR/errorlevel.js"></script>
+  <script type="text/javascript" src="QR/bitmat.js"></script>
+  <script type="text/javascript" src="QR/datablock.js"></script>
+  <script type="text/javascript" src="QR/bmparser.js"></script>
+  <script type="text/javascript" src="QR/datamask.js"></script>
+  <script type="text/javascript" src="QR/rsdecoder.js"></script>
+  <script type="text/javascript" src="QR/gf256poly.js"></script>
+  <script type="text/javascript" src="QR/gf256.js"></script>
+  <script type="text/javascript" src="QR/decoder.js"></script>
+  <script type="text/javascript" src="QR/qrcode.js"></script>
+  <script type="text/javascript" src="QR/findpat.js"></script>
+  <script type="text/javascript" src="QR/alignpat.js"></script>
+  <script type="text/javascript" src="QR/databr.js"></script>
+  <script type="text/javascript" src="cam.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script>
+  var socket = io.connect('http://localhost:1996');
+  </script>
+</body>
+</html>

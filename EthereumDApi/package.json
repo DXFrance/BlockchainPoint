@@ -1,0 +1,24 @@
+{
+  "name": "bcapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "html-pdf": "^2.1.0",
+    "mongoose": "^4.4.19",
+    "socket.io": "^1.4.8",
+    "twitter": "^1.2.5",
+    "sync": "^0.2.5",
+    "xlsx-to-json": "^0.2.4",
+    "twitter-stream-channels": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
