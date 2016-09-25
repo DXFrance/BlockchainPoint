@@ -58,6 +58,27 @@ app.post('/pdf', function(req, res) {
   }
 });
 
+// Blockchain events
+
+var ChainPoint = require('./ChainPoint.sol.js');
+var Web3 = require('web3');
+
+var abi = ChainPoint.all_networks[112358].abi;
+var address = ChainPoint.all_networks[112358].address;
+
+var web3 = new Web3(new Web3.providers.HttpProvider("http://tconte4kv.northeurope.cloudapp.azure.com:8545"));
+
+var contract = web3.eth.contract(abi).at(address);
+
+var logs = contract.JourneyAchieved({fromBlock: 'latest'});
+logs.watch(function(error, result) {
+  console.log("Journey Achieved!");
+  console.log(result.args.userid);
+  console.log(result.args.username);
+});
+
+// Run server
+
 server.listen(1996);
 
 function statPath(path) {
