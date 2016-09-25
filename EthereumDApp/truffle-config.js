@@ -29,6 +29,10 @@ module.exports = {
     },
     "development": {
       network_id: "default"
+    },
+    "bletchley": {
+      network_id: 112358,
+      host: "tconte4kv.northeurope.cloudapp.azure.com"
     }
   }
 };
