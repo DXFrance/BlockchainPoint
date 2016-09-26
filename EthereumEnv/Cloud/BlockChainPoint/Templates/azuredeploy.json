@@ -132,7 +132,8 @@
     "vmContainerName": "/vhds/",
     "vmOsDiskName": "[concat(parameters('resourceNamePrefix'),'-os-')]",
     "vmDataDiskName": "[concat(parameters('resourceNamePrefix'),'-data-')]",
-    "configExtensionScript": "https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-geth.sh",
+    "configExtensionScriptUrl": "https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-geth.sh",
+    "configExtensionScriptCmd": "sh configure-geth.sh",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",
@@ -316,9 +317,9 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "[variables('configExtensionScript')]"
+            "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat('sh configure-geth.sh ', parameters('adminUsername'), parameters('ethereumAccountPassword'), parameters('ethereumAccountKey'))]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'),'\"')]"
         }
       }
     },

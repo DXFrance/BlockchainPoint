@@ -1,3 +1,4 @@
 #!/bin/bash
+ETHEREUM_NETWORK_ID="${1}"
 
-geth --maxpeers 0 --networkid 101010101  --rpc --rpccorsdomain "*" console
+geth --maxpeers 0 --networkid "{$ETHEREUM_NETWORK_ID}" --rpc --rpccorsdomain "*" 
