@@ -138,7 +138,7 @@
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",
     "webAppName": "[concat(parameters('resourceNamePrefix'),'-WebApp')]",
-    "webAppSourceControlRepositoryUrl": "https://github.com/DXFrance/BlockchainPoint.git",
+    "webAppSourceControlRepositoryUrl": "https://github.com/davidebbo-test/Mvc52Application.git",
     "webAppSourceControlBranch": "master",
     "apiVersion": "2015-06-15",
     "webAppApiVersion": "2015-08-01"
