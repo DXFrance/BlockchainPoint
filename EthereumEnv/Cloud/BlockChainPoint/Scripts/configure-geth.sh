@@ -20,6 +20,7 @@ AZURE_USER="${1}"
 ETHEREUM_ACCOUNT_PWD="${2}"
 ETHEREUM_ACCOUNT_KEY="${3}"
 ETHEREUM_NETWORK_ID="${4}"
+ETHEREUM_ACCOUNT_ADDRESS="${5}"
 
 HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
@@ -27,6 +28,7 @@ ETHEREUM_ACCOUNT_PWD_FILE="$HOMEDIR/ethereum-account-pwd-file"
 ETHEREUM_ACCOUNT_KEY_FILE="$HOMEDIR/ethereum-account-key-file"
 GETH_LOG_FILE_PATH="$HOMEDIR/blockchain.log"
 GETH_START_SCRIPT="$HOMEDIR/start-private-blockchain.sh"
+BLOCKCHAIN_DIR="chains/hackademy"
 
 echo "User: $AZURE_USER"
 echo "User home dir: $HOMEDIR"
@@ -73,10 +75,13 @@ echo "completed geth install $$"
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
  
-geth account import "{$ETHEREUM_ACCOUNT_KEY_FILE}" --password "{$ETHEREUM_ACCOUNT_PASSWORD}"
+geth --password "{$ETHEREUM_ACCOUNT_PASSWORD}" --datadir "{$BLOCKCHAIN_DIR}" account import "{$ETHEREUM_ACCOUNT_KEY_FILE}" 
+
 echo "===== Prefunded Etehreum Account imported =====";
 
 #start blockchain
 
-sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
+#sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
+sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" "$BLOCKCHAIN_DIR" "$ETHEREUM_ACCOUNT_ADDRESS" "$ETHEREUM_ACCOUNT_PWD_FILE" </dev/null 2>&1 &
+
 echo "===== Started geth node =====";

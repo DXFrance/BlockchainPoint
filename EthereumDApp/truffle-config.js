@@ -24,7 +24,7 @@ module.exports = {
     },
     "production": {
       network_id: 180666,        // Official Ethereum test network
-      host: "blockchainpoint.westeurope.cloudapp.azure.com", // domain of ethereum client pointing to live network
+      host: "hackminingnode1.westeurope.cloudapp.azure.com", // domain of ethereum client pointing to live network
       port: 8545 
     },
     "development": {

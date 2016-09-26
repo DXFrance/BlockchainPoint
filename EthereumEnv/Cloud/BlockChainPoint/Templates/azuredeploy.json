@@ -55,6 +55,13 @@
         "description": "Public key for SSH authentication"
       }
     },
+    "ethereumAccountAddress": {
+      "type": "string",
+      "defaultValue": "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2",
+      "metadata": {
+        "description": "Ethereum prefunded account address"
+      }
+    },
     "ethereumAccountPassword": {
       "type": "securestring",
       "defaultValue": "HackMe007",
@@ -319,7 +326,7 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'),'\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\"')]"
         }
       }
     },
@@ -392,7 +399,7 @@
             "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
           ],
           "properties": {
-            "WEBSITE_NODE_DEFAULT_VERSION": "4.4.7"
+            "WEBSITE_NODE_DEFAULT_VERSION": "5.4.0"
           }
         },
         {
