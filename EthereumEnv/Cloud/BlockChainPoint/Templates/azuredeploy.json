@@ -132,7 +132,7 @@
     "vmContainerName": "/vhds/",
     "vmOsDiskName": "[concat(parameters('resourceNamePrefix'),'-os-')]",
     "vmDataDiskName": "[concat(parameters('resourceNamePrefix'),'-data-')]",
-    "configExtensionScript": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/go-ethereum-on-ubuntu/configure-geth.sh",
+    "configExtensionScript": "https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-geth.sh",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",
