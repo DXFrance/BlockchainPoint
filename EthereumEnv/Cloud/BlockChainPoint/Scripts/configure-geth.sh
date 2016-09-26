@@ -21,16 +21,22 @@ ETHEREUM_ACCOUNT_PWD="${2}"
 ETHEREUM_ACCOUNT_KEY="${3}"
 ETHEREUM_NETWORK_ID="${4}"
 
-
-ETHEREUM_ACCOUNT_PWD_FILE = "ethereum-account-pwd-file"
-ETHEREUM_ACCOUNT_KEY_FILE = "ethereum-account-key-file"
-GETH_LOG_FILE_PATH = "/tmp/blockchain.log"
-
 HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
+ETHEREUM_ACCOUNT_PWD_FILE = "$HOMEDIR/ethereum-account-pwd-file"
+ETHEREUM_ACCOUNT_KEY_FILE = "$HOMEDIR/ethereum-account-key-file"
+GETH_LOG_FILE_PATH = "$HOMEDIR/blockchain.log"
+GETH_START_SCRIPT = "$HOMEDIR/start-private-blockchain.sh"
+
 echo "User: $AZURE_USER"
 echo "User home dir: $HOMEDIR"
 echo "vmname: $VMNAME"
+echo "ETHEREUM_ACCOUNT_PWD = $ETHEREUM_ACCOUNT_PWD"
+echo "ETHEREUM_ACCOUNT_PWD_FILE = $ETHEREUM_ACCOUNT_PWD_FILE"
+echo "ETHEREUM_NETWORK_ID = $ETHEREUM_NETWORK_ID"
+echo "ETHEREUM_ACCOUNT_PWD_FILE = $ETHEREUM_ACCOUNT_PWD_FILE"
+echo "ETHEREUM_ACCOUNT_KEY_FILE = $ETHEREUM_ACCOUNT_KEY_FILE"
+echo "GETH_LOG_FILE_PATH = $GETH_LOG_FILE_PATH"
 
 #####################
 # setup the Azure CLI
@@ -72,5 +78,5 @@ echo "===== Prefunded Etehreum Account imported =====";
 
 #start blockchain
 
-sh start-private-blockchain.sh "{$ETHEREUM_NETWORK_ID}" </dev/null >"{GETH_LOG_FILE_PATH}" 2>&1 &
+sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
 echo "===== Started geth node =====";
