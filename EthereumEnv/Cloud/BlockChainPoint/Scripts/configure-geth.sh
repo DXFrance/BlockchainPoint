@@ -23,10 +23,10 @@ ETHEREUM_NETWORK_ID="${4}"
 
 HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
-ETHEREUM_ACCOUNT_PWD_FILE = "$HOMEDIR/ethereum-account-pwd-file"
-ETHEREUM_ACCOUNT_KEY_FILE = "$HOMEDIR/ethereum-account-key-file"
-GETH_LOG_FILE_PATH = "$HOMEDIR/blockchain.log"
-GETH_START_SCRIPT = "$HOMEDIR/start-private-blockchain.sh"
+ETHEREUM_ACCOUNT_PWD_FILE="$HOMEDIR/ethereum-account-pwd-file"
+ETHEREUM_ACCOUNT_KEY_FILE="$HOMEDIR/ethereum-account-key-file"
+GETH_LOG_FILE_PATH="$HOMEDIR/blockchain.log"
+GETH_START_SCRIPT="$HOMEDIR/start-private-blockchain.sh"
 
 echo "User: $AZURE_USER"
 echo "User home dir: $HOMEDIR"
@@ -70,8 +70,8 @@ geth init genesis.json
 echo "completed geth install $$"
 
 # configuration
-printf "${ETHEREUM_ACCOUNT_KEY}"  >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
-printf "${ETHEREUM_ACCOUNT_PWD}"  >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
+printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
+printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
  
 geth account import "{$ETHEREUM_ACCOUNT_KEY_FILE}" --password "{$ETHEREUM_ACCOUNT_PASSWORD}"
 echo "===== Prefunded Etehreum Account imported =====";
