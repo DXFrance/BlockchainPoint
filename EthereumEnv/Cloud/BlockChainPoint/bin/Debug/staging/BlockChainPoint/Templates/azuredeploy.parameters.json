@@ -23,6 +23,9 @@
     "ethereumAccountPassword": {
       "value": "HackMe007"
     },
+    "ethereumAccountAddress": {
+      "value": "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2"
+    },
     "ethereumAccountKey": {
       "value": "dec467a21e5a51a6c25f6ae9da9ddcd8d26a3bfe88d22f348c955689f9a4db28"
     },
@@ -36,7 +39,7 @@
       "value": "Standard"
     },
     "svcPlanSize": {
-      "value": "S1" 
+      "value": "S1"
     }
   }
 }

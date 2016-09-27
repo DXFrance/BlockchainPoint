@@ -75,13 +75,13 @@ echo "completed geth install $$"
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
  
-geth --password "{$ETHEREUM_ACCOUNT_PASSWORD}" --datadir "{$BLOCKCHAIN_DIR}" account import "{$ETHEREUM_ACCOUNT_KEY_FILE}" 
+geth --password "${ETHEREUM_ACCOUNT_PASSWORD}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE]" 
 
 echo "===== Prefunded Etehreum Account imported =====";
 
 #start blockchain
 
 #sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
-sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" "$BLOCKCHAIN_DIR" "$ETHEREUM_ACCOUNT_ADDRESS" "$ETHEREUM_ACCOUNT_PWD_FILE" </dev/null 2>&1 &
+sh "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}" </dev/null 2>&1 &
 
 echo "===== Started geth node =====";
