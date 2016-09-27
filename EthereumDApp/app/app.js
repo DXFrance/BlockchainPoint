@@ -5,25 +5,34 @@ if (localStorage.getItem("machine_id") === null) {
   var machine_id = localStorage.getItem("machine_id");
 }
 
+$('.machine-id').text('#'+machine_id);
 
+var certified = [];
 var http = false;
 var user = null;
-$('#reader').html5_qrcode(function(data){
-  // QR code detected
+var qr = new QCodeDecoder();
+var video = document.querySelector('video');
+var contract, logs;
 
-  // Return if locked
+if (!(qr.isCanvasSupported() && qr.hasGetUserMedia())) {
+  alert('Your browser doesn\'t match the required specs.');
+  throw new Error('Canvas and getUserMedia are required');
+}
+
+function resultHandler (err, result) {
+  if (err)
+    return console.log(err.message);
+
   if (http) {
     return;
   }
 
-  $('.loader').fadeIn();
+  $('#loader-video').fadeIn();
   console.log('Getting user GUID');
-
-  // Lock
   http = true;
 
   // Extract data
-  var ids = data.split('/');
+  var ids = result.split('/');
   var id = ids[ids.length - 1];
   console.log('GUID : ' + id);
 
@@ -37,27 +46,23 @@ $('#reader').html5_qrcode(function(data){
     }
     console.log(data);
     user = data;
-    $('.loader').fadeOut(function() {
-      $('.anonymous').fadeOut();
-      $('.well').css('display', 'block').addClass('animated flipInX').text('Welcome ' + user.firstname + ' ' + user.lastname + ' | ' + user.mail + ' from ' + user.country.value);
-    });
-
+    $('#loader').find('span').text(user.firstname);
+    $('#loader').css('bottom', '0px');
     // Send to blockchain
     sendToBlockchain(id, user, machine_id);
-
+    $('#loader-video').fadeOut();
     // Release lock
-    http = false;
+    setTimeout(function() {
+      http = false;
+      $('#loader').css('bottom', '-200px');
+    }, 2000);
   });
-}, function() {
-  // No QR code detected
-}, function() {
-  // Error
-});
+}
 
-var contract, logs;
+qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
-  contract = ChainPoint.at('0x39f0a2ec78069eb5f37934d59c85c8c584778157');
+  contract = ChainPoint.at("0x9182b988e3d9adcc45c5ea15f3fa8b9d24572fd9");
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
     console.log("CheckPoint!");
@@ -72,7 +77,7 @@ $(document).ready(function() {
 // Send transaction to blockchain
 
 function sendToBlockchain(id, user, step) {
-  var account_testrpc = "0x9de967378ed802b954e3be289cc5d598021c7ffe";
+  var account_testrpc = "0x9a1cfec1bbc5c5b2eafe12f82267c47369e9b7fc";
   var account_production = "0xa4cc9db2ac66daf6b3a99f7064fa6d3e598cb7e8";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
@@ -87,27 +92,45 @@ function sendToBlockchain(id, user, step) {
   });
 }
 
+var template_certification = '<li><span class="date">{{ time }}</span><span class="puce"></span><span class="name">{{ firstname }} <i data-twitter="{{ twitter }}" data-firstname="{{firstname}}" class="fa fa-twitter"></i></span><span class="status">Vous êtes certifié</span><span class="link"><a href="{{ pdf }}" target="blank"><i class="fa fa-file-pdf-o"></i> {{ pdf }}</a></span><i class="icone fa fa-check"></i></li>';
+var template_checkpoint = '<li><span class="date">{{ time }}</span><span class="puce"></span><span class="name">{{ firstname }}</span><span class="status">Minage en cours ... #{{ step }}</span><i class="icone fa fa-clock-o"></i></li>';
+var template_checkpoint_done = '<li><span class="date">{{ time }}</span><span class="puce"></span><span class="name">{{ firstname }}</span><span class="status">Miné ! #{{ step }}</span><i class="icone fa fa-plus"></i></li>';
+
 function DOM_pushCheckpoint(firstname, step) {
-  $('.table-checkpoints').find('tbody').append('<tr><td>#' + firstname + ' - <i class="fa fa-clock-o"></i> Checkpoint #' + step + ' - En cours de minage ...</td></tr>');
+  $('.content-checkpoint').find('ul').prepend(Mustache.render(template_checkpoint, {time: getTime(), firstname: firstname, step: step}));
 }
 
 function DOM_pushCheckpointDone(firstname, step) {
-  $('.table-checkpoints').find('tbody').append('<tr><td>#' + firstname + ' - <i class="fa fa-check"></i> Checkpoint #' + step + ' - Miné !</td></tr>');
+  $('.content-checkpoint').find('ul').prepend(Mustache.render(template_checkpoint_done, {time: getTime(), firstname: firstname, step: step}));
 }
 
-function DOM_pushCertification(firstname, pdf) {
-  $('.table-certifs').find('tbody').append('<tr><td>' + firstname + ' - <i class="fa fa-user"></i> Certifiée - <a href="'+ pdf +'" target="_blank" title="Certification">'+ pdf +'</a></td></tr>');
+function DOM_pushCertification(firstname, pdf, time, twitter) {
+  $('.content-certification').find('ul').prepend(Mustache.render(template_certification, {twitter: twitter, time: time, firstname: firstname, pdf: pdf}));
 }
+
+$('.content-certification ul').on('click', '.fa-twitter', function() {
+  $('#modal').find('.modal-title span').text($(this).data('firstname'));
+  $('#modal').find('.modal-body iframe').attr('src', "http://twitframe.com/show?url="+$(this).data('twitter'));
+  $('#modal').modal('toggle');
+});
 
 var socket = io.connect('http://localhost:1996');
 socket.on('user_complete', function(users_complete) {
   for (var i = 0, len = users_complete.length; i < len; i++) {
-    DOM_pushCertification(users_complete[i].username, users_complete[i].pdf);
+    if (certified.indexOf(users_complete[i].id) == -1) {
+      certified.push(users_complete[i].id);
+      DOM_pushCertification(users_complete[i].username, users_complete[i].pdf, users_complete[i].time, users_complete[i].twitter);
+    }
   }
+  $('.certified').text(certified.length);
 });
 
 socket.on('user_complete_new', function(user_complete) {
-  DOM_pushCertification(user_complete.username, user_complete.pdf);
+  if (certified.indexOf(user_complete.id) == -1) {
+    certified.push(user_complete.id);
+    DOM_pushCertification(user_complete.username, user_complete.pdf, user_complete.time, user_complete.twitter);
+  }
+  $('.certified').text(certified.length);
 });
 
 socket.on('checkpoint_begin', function(user_checkpoint) {
@@ -117,3 +140,16 @@ socket.on('checkpoint_begin', function(user_checkpoint) {
 socket.on('checkpoint_mined', function(user_checkpoint) {
   DOM_pushCheckpointDone(user_checkpoint.username, user_checkpoint.step);
 });
+
+var resize = function() {
+  $('video').css('height', $('video').width());
+};
+
+resize();
+
+$(window).on('resize', resize);
+
+var getTime = function() {
+  var d = new Date();
+  return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)
+};

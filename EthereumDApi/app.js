@@ -12,6 +12,15 @@ var config = require('./config');
 var token;
 var request = require('sync-request');
 var user_complete = certified;
+
+var Twitter = require('twitter');
+var client = new Twitter({
+  consumer_key: 'kzNrHYM4362CnMKm6jbGFuDPH',
+  consumer_secret: 'ln3OQsIYt2JoE0Rx9LHkBp4eSIgo9omJPxFrcGGg3YuAQpqTUC',
+  access_token_key: '780674269206355968-CnZsI20Rq5vd8bcD4aNuIXicRDsqjCg',
+  access_token_secret: '4nFOQnGvmVlFl8H7WpnhvE3chiOLmdHJa3YwvhvXMEPc4'
+});
+
 var oauth2 = require('simple-oauth2').create({
   client: {
     id: config.client_id,
@@ -52,7 +61,6 @@ app.use(bodyParser.urlencoded({
 
 app.post('/auth', function(req, res){
   var id = req.body.id;
-
   return res.json(getUser(id));
 });
 
@@ -62,7 +70,7 @@ var ChainPoint = require('./ChainPoint.sol.js');
 var Web3 = require('web3');
 
 var abi = ChainPoint.all_networks['default'].abi;
-var address = "0x39f0a2ec78069eb5f37934d59c85c8c584778157";
+var address = "0x9182b988e3d9adcc45c5ea15f3fa8b9d24572fd9";
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
@@ -129,10 +137,18 @@ function setUpBlockChainWatch() {
     var user = getUser(result.args.userid);
     var html_data = ejs.render(html, { firstname: user.firstname, lastname: user.lastname });
     pdf.create(html_data, {format: 'Letter'}).toFile('public/' + result.args.userid + '.pdf', function(err, response) {
-      var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: createLink('http://127.0.0.1:1996/' + result.args.userid + '.pdf')};
-      user_complete.push(user_complete_new);
-      fs.writeFile('certified.json', JSON.stringify(user_complete), 'utf8');
-      io.sockets.emit('user_complete_new', user_complete_new);
+      var pdf_link = createLink('http://127.0.0.1:1996/' + result.args.userid + '.pdf');
+      client.post('statuses/update', {status: ((user.twitterId != "") ? '@'+user.twitterId : '') + ' #experiences ' + user.firstname + ' BlockChainPoint certification ' + pdf_link}, function(error, tweet, response){
+        var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null )};
+        user_complete.push(user_complete_new);
+        fs.writeFile('certified.json', JSON.stringify(user_complete), 'utf8');
+        io.sockets.emit('user_complete_new', user_complete_new);
+      });
     });
   });
 }
+
+var getTime = function() {
+  var d = new Date();
+  return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)
+};

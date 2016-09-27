@@ -13,7 +13,7 @@
     "socket.io": "^1.4.8",
     "sync": "^0.2.5",
     "sync-request": "^3.0.1",
-    "twitter": "^1.2.5",
+    "twitter": "^1.4.0",
     "twitter-stream-channels": "^1.0.0",
     "web3": "^0.17.0-beta",
     "xlsx-to-json": "^0.2.4"
