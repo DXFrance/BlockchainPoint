@@ -55,6 +55,13 @@
         "description": "Public key for SSH authentication"
       }
     },
+    "ethereumAccountAddress": {
+      "type": "string",
+      "defaultValue": "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2",
+      "metadata": {
+        "description": "Ethereum prefunded account address"
+      }
+    },
     "ethereumAccountPassword": {
       "type": "securestring",
       "defaultValue": "HackMe007",
@@ -125,8 +132,21 @@
     "subnetName": "[concat(parameters('resourceNamePrefix'),'SubNet')]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "subnetAddressPrefix": "10.0.0.0/24",
-    "pIPAddressNamePrefix": "[concat(parameters('resourceNamePrefix'),'-PIP-')]",
+    "pIPLoadBalancerAddressName": "[concat(parameters('resourceNamePrefix'),'-PIP-LB')]",
+    "pIPEthereumNodeAddressNamePrefix": "[concat(parameters('resourceNamePrefix'),'-PIP-')]",
     "pIPAddressType": "Dynamic",
+    "loadBalancerName": "[concat(parameters('resourceNamePrefix'),'-LB')]",
+    "loadBalancerFrontEndIpConfigName": "[concat(parameters('resourceNamePrefix'),'-LB-FE')]",
+    "loadBalancerBackendAddressPoolName": "[concat(parameters('resourceNamePrefix'),'-LB-BE')]",
+    "loadBalancerID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
+    "loadBalancerFrontEndIpConfigID": "[concat(variables('loadBalancerID'),'/frontendIPConfigurations/',variables('loadBalancerFrontEndIpConfigName'))]",
+    "loadBalancerBackendAddressPoolID": "[concat(variables('loadBalancerID'), '/backendAddressPools/',variables('loadBalancerBackendAddressPoolName'))]",
+    "httpPort": 80,
+    "adminSitePort": 3000,
+    "sshPort": 22,
+    "gethRPCPort": 8545,
+    "gethIPCPort": 30303,
+    "NetworkSecurityGroupName": "[concat(parameters('resourceNamePrefix'),'-NSG')]",
     "nicNamePrefix": "[concat(parameters('resourceNamePrefix'),'-Nic-')]",
     "vmNamePrefix": "[concat(parameters('resourceNamePrefix'),'-Vm-')]",
     "vmContainerName": "/vhds/",
@@ -138,7 +158,7 @@
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",
     "webAppName": "[concat(parameters('resourceNamePrefix'),'-WebApp')]",
-    "webAppSourceControlRepositoryUrl": "https://github.com/davidebbo-test/Mvc52Application.git",
+    "webAppSourceControlRepositoryUrl": "https://github.com/DXFrance/BlockchainPoint.git",
     "webAppSourceControlBranch": "master",
     "apiVersion": "2015-06-15",
     "webAppApiVersion": "2015-08-01"
@@ -149,6 +169,9 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Avaialbility Set"
+      },
       "properties": {
         "PlatformFaultDomainCount": "[variables('faultDomainCount')]",
         "PlatformUpdateDomainCount": "[variables('updateDomainCount')]"
@@ -159,6 +182,9 @@
       "name": "[variables('storageAccountName')]",
       "apiVersion": "[variables('apiVersion')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Storage Account"
+      },
       "properties": {
         "accountType": "[variables('storageAccountType')]"
       }
@@ -166,8 +192,11 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[concat(variables('pipAddressNamePrefix'), copyindex())]",
+      "name": "[concat(variables('pIPEthereumNodeAddressNamePrefix'), copyindex())]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Public IPs"
+      },
       "copy": {
         "name": "PublicIPAddressesCopy",
         "count": "[parameters('ethereumMiningNodesNumber')]"
@@ -181,9 +210,159 @@
     },
     {
       "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('pIPLoadBalancerAddressName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Load Balancer public IP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('vmDnsPrefix')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('loadBalancerName')]",
+      "type": "Microsoft.Network/loadBalancers",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Load Balancer"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pIPLoadBalancerAddressName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "[variables('loadbalancerFrontEndIpConfigName')]",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses/', variables('pIPLoadBalancerAddressName'))]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "[variables('loadBalancerBackendAddressPoolName')]"
+          }
+        ],
+        "loadBalancingRules": [
+          {
+            "name": "HTTP-LB-Rule",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('loadBalancerFrontEndIPConfigID')]"
+              },
+              "backendAddressPool": {
+                "id": "[variables('loadBalancerBackendAddressPoolID')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": "[variables('httpPort')]",
+              "backendPort": "[variables('adminSitePort')]",
+              "enableFloatingIP": false,
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[concat(variables('loadBalancerID'),'/probes/lbProbe')]"
+              }
+            }
+          },
+          {
+            "name": "GethRPC-LB-Rule",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('loadBalancerFrontEndIPConfigID')]"
+              },
+              "backendAddressPool": {
+                "id": "[variables('loadBalancerBackendAddressPoolID')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": "[variables('gethRPCPort')]",
+              "backendPort": "[variables('gethRPCPort')]",
+              "enableFloatingIP": false,
+              "idleTimeoutInMinutes": 5
+            }
+          }
+        ],
+        "probes": [
+          {
+            "name": "lbProbe",
+            "properties": {
+              "protocol": "Tcp",
+              "port": "[variables('adminSitePort')]",
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[variables('NetworkSecurityGroupName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Network Security Group"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-ssh",
+            "properties": {
+              "description": "Allow SSH",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow-geth-rpc",
+            "properties": {
+              "description": "Allow geth RPC",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8545",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 101,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow-etheradmin",
+            "properties": {
+              "description": "Allow etheradmin web service",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3000",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 102,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('vnetName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Virtual Network"
+      },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -194,7 +373,11 @@
           {
             "name": "[variables('subnetName')]",
             "properties": {
-              "addressPrefix": "[variables('subnetAddressPrefix')]"
+              "addressPrefix": "[variables('subnetAddressPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('NetworkSecurityGroupName'))]"
+              }
+
             }
           }
         ]
@@ -205,13 +388,17 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicNamePrefix'), copyindex())]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Network cards"
+      },
       "copy": {
         "name": "NetworkInterfacesCopy",
         "count": "[parameters('ethereumMiningNodesNumber')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('pIPAddressNamePrefix'), copyindex())]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('pIPEthereumNodeAddressNamePrefix'), copyindex())]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]",
+        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -220,11 +407,16 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pIPAddressNamePrefix'), copyindex()))]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pIPEthereumNodeAddressNamePrefix'), copyindex()))]"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
-              }
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[variables('loadBalancerBackendAddressPoolID')]"
+                }
+              ]
             }
           }
         ]
@@ -235,6 +427,9 @@
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('vmNamePrefix'), copyindex())]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Nodes Virtual machines"
+      },
       "copy": {
         "name": "VirtualMachinesCopy",
         "count": "[parameters('ethereumMiningNodesNumber')]"
@@ -302,6 +497,9 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('vmNamePrefix'), copyindex(), '/configExtension')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Ethereum Config Extension"
+      },
       "copy": {
         "name": "ExtensionCopy",
         "count": "[parameters('ethereumMiningNodesNumber')]"
@@ -319,96 +517,9 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'),'\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\"')]"
         }
       }
-    },
-    {
-      "name": "[variables('svcPlanName')]",
-      "type": "Microsoft.Web/serverfarms",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('webAppApiVersion')]",
-      "sku": {
-        "name": "[parameters('svcPlanSize')]",
-        "tier": "[parameters('svcPlanSku')]",
-        "capacity": 1
-      }
-    },
-    {
-      "name": "[variables('webAppName')]",
-      "type": "Microsoft.Web/sites",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('webAppApiVersion')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]"
-      ],
-      "properties": {
-        "serverFarmId": "[variables('svcPlanName')]"
-      },
-      "resources": [
-        {
-          "name": "web",
-          "type": "config",
-          "apiVersion": "[variables('webAppApiVersion')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
-          ],
-          "properties": {
-            "use32BitWorkerProcess": false, /* check if geth requires 64-bit platform */
-            "webSocketsEnabled": true,
-            "alwaysOn": true,
-            "requestTracingEnabled": true, /* Failed request tracing, aka 'freb' */
-            "httpLoggingEnabled": true, /* IIS logs (aka Web server logging) */
-            "logsDirectorySizeLimit": 40, /* 40 MB limit for IIS logs */
-            "detailedErrorLoggingEnabled": true, /* Detailed error messages  */
-            "remoteDebuggingEnabled": true,
-            "remoteDebuggingVersion": "VS2015",
-            "virtualApplications": [
-              {
-                "virtualPath": "/",
-                "physicalPath": "site\\wwwroot\\EthereumDApp\\App",
-                "preloadEnabled": true,
-                "virtualDirectories": null
-              },
-              {
-                "virtualPath": "/Api",
-                "physicalPath": "site\\wwwroot\\EthereumDApi",
-                "preloadEnabled": true,
-                "virtualDirectories": null
-              }
-            ],
-
-            "defaultDocuments": [
-              "index.html",
-              "hostingstart.html"
-            ]
-          }
-        },
-        {
-          "name": "appsettings",
-          "type": "config",
-          "apiVersion": "[variables('webAppApiVersion')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
-          ],
-          "properties": {
-            "WEBSITE_NODE_DEFAULT_VERSION": "4.4.7"
-          }
-        },
-        {
-          "name": "web",
-          "type": "sourcecontrols",
-          "apiVersion": "[variables('webAppApiVersion')]",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
-          ],
-          "properties": {
-            "RepoUrl": "[variables('webAppSourceControlRepositoryUrl')]",
-            "branch": "[variables('webAppSourceControlBranch')]",
-            "IsManualIntegration": true
-          }
-        }
-      ]
     }
   ],
   "outputs": {

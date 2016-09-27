@@ -62,7 +62,7 @@ function resultHandler (err, result) {
 qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
-  contract = ChainPoint.at("0x9182b988e3d9adcc45c5ea15f3fa8b9d24572fd9");
+  contract = ChainPoint.at("0x7938bde0ae1f966eae64d5225f7ef45c1a732de6");
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
     console.log("CheckPoint!");
@@ -78,10 +78,10 @@ $(document).ready(function() {
 
 function sendToBlockchain(id, user, step) {
   var account_testrpc = "0x9a1cfec1bbc5c5b2eafe12f82267c47369e9b7fc";
-  var account_production = "0xa4cc9db2ac66daf6b3a99f7064fa6d3e598cb7e8";
+  var account_production = "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
-  contract.check(id, user.firstname, step, {from: account_testrpc}).then(function(tx) {
+  contract.check(id, user.firstname, step, {from: account_production, gas: 200000}).then(function(tx) {
     DOM_pushCheckpoint(user.firstname, step);
     socket.emit('checkpoint_begin', {username: user.firstname, step: step});
     console.log("Transaction successful! " + tx);

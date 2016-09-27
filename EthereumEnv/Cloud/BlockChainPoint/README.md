@@ -21,6 +21,7 @@ When you launch the installation of the Ethereum nodes, you need to specify the 
 * `adminUsername`: Administrator username of each deployed Etehreum VM". This is the account you will use for connecting to the node
 * `adminPassword`: Administrator password for each deployed Ethereum VM Node. Be aware that Azure requires passwords to have One upper case, one lower case, a special character, and a number
 * `sshKeyData`: ssh key to log on Ethereum nodes
+* `ethereumAccountAddress`: Prefunded Ethereum account address
 * `ethereumAccountPassword`: Administrator password used to secure the generated private key file associated with the created Ethereum account
 * `ethereumAccountKey`: Private key used to generate account prefunded with Ether
 * `ethereumNetworkID`: Private Ethereum network ID to which to connect
