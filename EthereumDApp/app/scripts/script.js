@@ -37,7 +37,7 @@ function resultHandler (err, result) {
   console.log('GUID : ' + id);
 
   // Retrieve user name
-  $.post('http://localhost:1996/auth', {id: id}, function(data) {
+  $.post('https://hackademy-webapi.azurewebsites.net/auth', {id: id}, function(data) {
     if (data.error) {
       alert('Error');
       http = false;
@@ -114,7 +114,7 @@ $('.content-certification ul').on('click', '.fa-twitter', function() {
   $('#modal').modal('toggle');
 });
 
-var socket = io.connect('http://localhost:1996');
+var socket = io.connect('https://hackademy-webapi.azurewebsites.net');
 socket.on('user_complete', function(users_complete) {
   for (var i = 0, len = users_complete.length; i < len; i++) {
     if (certified.indexOf(users_complete[i].id) == -1) {
