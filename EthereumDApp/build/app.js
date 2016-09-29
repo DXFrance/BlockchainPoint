@@ -43595,7 +43595,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
@@ -43679,7 +43679,7 @@ $(document).ready(function() {
     console.log(result.args.username);
     console.log(result.args.step.toString());
     DOM_pushCheckpointDone(result.args.username, result.args.step.toString());
-    socket.emit('checkpoint_mined', {username: result.args.username, step: result.args.step.toString()});
+    //socket.emit('checkpoint_mined', {username: result.args.username, step: result.args.step.toString()});
   });
 });
 
@@ -43690,9 +43690,10 @@ function sendToBlockchain(id, user, step) {
   var account_production = "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
+  
+  DOM_pushCheckpoint(user.firstname, step);
+  socket.emit('checkpoint_begin', {username: user.firstname, step: step});
   contract.check(id, user.firstname, step, {from: account_production, gas: 200000}).then(function(tx) {
-    DOM_pushCheckpoint(user.firstname, step);
-    socket.emit('checkpoint_begin', {username: user.firstname, step: step});
     console.log("Transaction successful! " + tx);
   }).catch(function(e) {
     // Transaction failed
