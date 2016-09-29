@@ -4,7 +4,7 @@ module.exports = {
     "app.css": "app.css",
     "img/": "img/",
     "QR/": "QR/",
-    "scripts/": "scripts/",
+    "app.js": "app.js",
     "bower_components/": "bower_components"
   },
   rpc: {

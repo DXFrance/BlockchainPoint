@@ -62,7 +62,7 @@ function resultHandler (err, result) {
 qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
-  contract = ChainPoint.at("0x7938bde0ae1f966eae64d5225f7ef45c1a732de6");
+  contract = ChainPoint.at("0x317b3e75b9c316497c006eebd316b1254504c4b8");
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
     console.log("CheckPoint!");
@@ -70,6 +70,7 @@ $(document).ready(function() {
     console.log(result.args.username);
     console.log(result.args.step.toString());
     DOM_pushCheckpointDone(result.args.username, result.args.step.toString());
+    //socket.emit('checkpoint_mined', {username: result.args.username, step: result.args.step.toString()});
   });
 });
 
@@ -80,6 +81,7 @@ function sendToBlockchain(id, user, step) {
   var account_production = "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
+
   DOM_pushCheckpoint(user.firstname, step);
   socket.emit('checkpoint_begin', {username: user.firstname, step: step});
   contract.check(id, user.firstname, step, {from: account_production, gas: 200000}).then(function(tx) {

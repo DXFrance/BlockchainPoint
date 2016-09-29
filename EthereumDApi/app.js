@@ -12,6 +12,8 @@ var config = require('./config');
 var token;
 var request = require('sync-request');
 var user_complete = certified;
+var cors = require('cors');
+
 
 var Twitter = require('twitter');
 var client = new Twitter({
@@ -46,6 +48,9 @@ var getToken = function() {
 
 getToken();
 
+app.use(cors());
+app.options('*', cors());
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
@@ -74,7 +79,7 @@ var ChainPoint = require('./ChainPoint.sol.js');
 var Web3 = require('web3');
 
 var abi = ChainPoint.all_networks['default'].abi;
-var address = "0x7938bde0ae1f966eae64d5225f7ef45c1a732de6";
+var address = "0x317b3e75b9c316497c006eebd316b1254504c4b8";
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://hackminingnode0.northeurope.cloudapp.azure.com:8545"));
 
