@@ -10,87 +10,80 @@
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <div id="header" class="animated flipInX">
-    <img src="/img/ms.jpg" alt="Microsoft" class="ms">
-    <i class="fa fa-heart"></i>
-    <img src="/img/bc.png" alt="BlockChain" class="bc">
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="panel panel-primary" style="position: relative;">
-          <div class="loader">
+  <div class="container-full">
+    <div class="row head">
+      <div class="col-md-4 head-logo">
+        <img src="img/logo.png" alt="Logo">
+      </div>
+      <div class="col-md-4 head-checkpoint head-list">
+        <div>
+          <span class="puce"></span>
+          <i class="fa fa-flag"></i>
+          <span class="title-1">Checkpoint</span>
+          <span class="title-2">Bienvenue,</span>
+          <span class="title-3 machine-id"></span>
+        </div>
+      </div>
+      <div class="col-md-4 head-certification head-list">
+        <div>
+          <span class="puce"></span>
+          <i class="fa fa-graduation-cap"></i>
+          <span class="title-1">Certification</span>
+          <span class="title-2">Félicitations</span>
+          <span class="title-3 certified"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col-md-4 content-qr">
+        <p>Scan your QR Code</p>
+        <div class="chevron"><i class="fa fa-chevron-down"></i></div>
+        <div class="video-handler">
+          <div id="loader-video">
             <div>
               <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-              <span>Identification en cours ...</span>
             </div>
           </div>
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-lock"></i> Identification</h3>
-          </div>
-          <div class="panel-body">
-            <div class="videoWrapper">
-              <div id="reader">
-              </div>
-            </div>
-            <p class="anonymous animated"><i class="fa fa-qrcode"></i> <span>You are currently anonymous, QR your badge to access the Blockchain !</span></p>
-            <div class="well">
-
-            </div>
-            <div class="text-center pdf"><button class="btn btn-success pdf-link"><i class="fa fa-download"></i> Get pdf link</button></div>
-          </div>
+          <video autoplay></video>
         </div>
       </div>
-      <div class="col-md-4 np">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-flag"></i> CheckPoints</h3>
-          </div>
-          <div class="panel-body">
-            <table class="table table-striped table-hover table-checkpoints">
-              <tbody>
+      <div class="col-md-4 content-checkpoint content-list">
+        <ul>
 
-              </tbody>
-            </table>
-          </div>
-        </div>
+        </ul>
       </div>
-      <div class="col-md-4 np">
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-graduation-cap"></i> Certifications</h3>
-          </div>
-          <div class="panel-body">
-            <table class="table table-striped table-hover table-certifs">
-              <tbody>
+      <div class="col-md-4 content-certification content-list">
+        <ul>
 
-              </tbody>
-            </table>
-          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="loader">
+    Bienvenue dans la Blockchain <span></span> ! :)
+  </div>
+  <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-twitter"></i> <span></span> Certification - Twitter</h4>
+        </div>
+        <div class="modal-body">
+          <iframe border=0 frameborder=0 height=250 width="100%"></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="http://localhost:1996/socket.io/socket.io.js"></script>
+
+  <script type="text/javascript" src="https://hackademy-webapi.azurewebsites.net/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="QR/grid.js"></script>
-  <script type="text/javascript" src="QR/version.js"></script>
-  <script type="text/javascript" src="QR/detector.js"></script>
-  <script type="text/javascript" src="QR/formatinf.js"></script>
-  <script type="text/javascript" src="QR/errorlevel.js"></script>
-  <script type="text/javascript" src="QR/bitmat.js"></script>
-  <script type="text/javascript" src="QR/datablock.js"></script>
-  <script type="text/javascript" src="QR/bmparser.js"></script>
-  <script type="text/javascript" src="QR/datamask.js"></script>
-  <script type="text/javascript" src="QR/rsdecoder.js"></script>
-  <script type="text/javascript" src="QR/gf256poly.js"></script>
-  <script type="text/javascript" src="QR/gf256.js"></script>
-  <script type="text/javascript" src="QR/decoder.js"></script>
-  <script type="text/javascript" src="QR/qrcode.js"></script>
-  <script type="text/javascript" src="QR/findpat.js"></script>
-  <script type="text/javascript" src="QR/alignpat.js"></script>
-  <script type="text/javascript" src="QR/databr.js"></script>
-  <script type="text/javascript" src="cam.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/mustache.js/mustache.js"></script>
+  <script type="text/javascript" src="QR/qcode-decoder.min.js"></script>
+  <script type="text/javascript" src="scripts/script.js"></script>
 </body>
 </html>

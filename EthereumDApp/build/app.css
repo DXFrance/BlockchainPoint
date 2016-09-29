@@ -1,93 +1,268 @@
 
 
-.container {
-  margin-top: 50px;
+* {
+  font-family: 'Segoe UI';
+}
+
+body {
+  background-color: #19191a;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+  padding: 15px 10px;
+}
+
+.head {
+  min-height: 175px;
+  border-bottom: 1px solid #55545a;
+}
+
+.head-logo img {
+  position: relative;
+  top: 20px;
+  width: 100%;
+}
+
+.head-list div {
+  height: 70px;
+  border-left: 1px solid #55545a;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding-left: 18px;
+}
+
+.head-list i {
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  left: -9px;
+  top: -34px;
+}
+
+.head-list .puce {
+  position: absolute;
+  left: -5px;
+  top: -10px;
+}
+
+.head-list {
+  height: 175px;
+}
+
+.title-1 {
+  color: white;
+  display: block;
+  font-weight: 500;
+}
+
+.title-2 {
+  color: #0193c9;
+  font-weight: 500;
+  font-size: 28px;
+  position: relative;
+  bottom: 4px;
+}
+
+.title-3 {
+  color: #55545a;
+  font-size: 85px;
+  position: absolute;
+  right: 30px;
+  bottom: -10px;
+  font-weight: 100;
+}
+
+.head-certification .title-3 {
+  padding-right: 10px;
+}
+
+.puce {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid #55545a;
+  background: #19191a;
+}
+
+.content-qr p {
+  color: #56565b;
+  text-align: center;
+  padding-top: 50px;
+  font-size: 15px;
+}
+
+.content-qr div.chevron {
+  text-align: center;
+}
+
+.content-qr .video-handler {
+  width: 50%;
+  margin: auto;
   position: relative;
 }
 
-.np {
-  padding: 0px;
+.content-qr div i.fa-chevron-down {
+  color: #0193c9;
+  font-size: 35px;
+  position: relative;
+  bottom: 10px;
 }
 
-canvas {
-  display: none;
-}
-
-.videoWrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
-}
-.videoWrapper #reader {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.loader {
-  position: absolute;
-  top: 0px;
-  height: 100%;
+.content-qr video {
+  border-radius: 50%;
   width: 100%;
-  background: rgba(0,0,0,0.6);
+  margin: auto;
+  border: 5px solid #0193c9;
+  position: relative;
+  top: 20px;
+  object-fit: inherit;
+}
+
+.content-qr #loader-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
   z-index: 5;
-  left: 0px;
-  color: white;
-  text-align: center;
+  border-radius: 50%;
+  top: 20px;
   display: none;
 }
 
-.loader div {
-  font-size: 25px;
+.content-qr #loader-video div {
+  font-size: 35px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.well {
-  display: none;
-  margin-top: 10px;
-}
-
-.loader i {
-  font-size: 40px;
-    margin-right: 10px;
-    position: relative;
-    top: 5px;
-}
-
-.pdf {
-  display: none;
-}
-
-#header {
+  display: inline-block;
+  color: #0193c9;
   text-align: center;
-  margin-top: 50px;
+  width: 100%;
 }
 
-#header i {
-  color: #e74c3c;
-    font-size: 39px;
-    margin: 0px 10px;
+#loader {
+  width: 100%;
+  position: absolute;
+  height: 200px;
+  background: #0193c9;
+  bottom: -200px;
+  color: white;
+  z-index: 555;
+  text-align: center;
+  line-height: 200px;
+  font-size: 45px;
+  transition: all linear 0.3s;
 }
 
-#header img.ms {
-  height: 125px;
-}
-
-#header img.bc {
-  height: 100px;
+.content-list ul {
+  padding: 0;
+  margin: 0px;
+  list-style-type: none;
+  width: calc(100% + 31px);
   position: relative;
-  bottom: 13px;
 }
 
-.anonymous {
-  font-size: 20px;
-    margin-top: 15px;
-    border-top: 1px solid black;
-    padding-top: 14px;
-    text-align: center;
+.content-list ul li {
+  height: 90px;
+  width: 100%;
+  border-left: 1px solid #55545a;
+  border-right: 1px solid #55545a;
+  border-bottom: 1px solid #55545a;
+  position: relative;
+  padding-left: 85px;
+  transition: 0.2s linear all;
+}
+
+.content-list ul li .date {
+  color: #56565b;
+  position: absolute;
+  left: -54px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  transition: 0.2s linear all;
+}
+
+.content-list ul li .puce {
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.2s linear all;
+}
+
+.content-list ul li .name {
+  display: block;
+  color: #56565b;
+  font-weight: 500;
+  font-size: 23px;
+  position: relative;
+  top: 15px;
+  transition: 0.2s linear all;
+}
+
+.content-list ul li .status {
+  color: #56565b;
+  position: relative;
+  top: 15px;
+  transition: 0.2s linear all;
+}
+
+.content-list ul li i.icone {
+  color: #56565b;
+  font-size: 32px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 30px;
+  transition: 0.2s linear all;
+}
+
+.content-list ul li:hover, .content-list ul li:hover .puce {
+  border-color: #0193c9;
+}
+
+.content-list ul li:hover .date, .content-list ul li:hover .status, .content-list ul li:hover i, .content-certification ul li:hover .link, .content-certification ul li:hover .fa-twitter {
+  color: #0193c9;
+}
+
+.content-list ul li:hover .name {
+  color: white;
+}
+
+.content-certification ul li .link {
+  float: right;
+  padding-right: 45px;
+  z-index: 5;
+  position: relative;
+}
+
+.content-certification ul li .fa-twitter {
+  color: #56565b;
+  font-size: 28px;
+  position: relative;
+  margin-left: 5px;
+  top: 0px;
+  cursor: pointer;
+}
+
+.content-certification ul li a {
+  display: block;
+  color: #0193c9;
+}
+
+.content-certification ul li a:hover {
+  text-decoration: none;
+}
+
+.modal-content  {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
 }
