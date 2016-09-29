@@ -78,7 +78,7 @@ var contract = web3.eth.contract(abi).at(address);
 
 // Run server
 
-server.listen(1996);
+server.listen(process.env.PORT || 1996);
 
 function statPath(path) {
   try {
@@ -137,7 +137,7 @@ function setUpBlockChainWatch() {
     var user = getUser(result.args.userid);
     var html_data = ejs.render(html, { firstname: user.firstname, lastname: user.lastname });
     pdf.create(html_data, {format: 'Letter'}).toFile('public/' + result.args.userid + '.pdf', function(err, response) {
-      var pdf_link = createLink('http://127.0.0.1:1996/' + result.args.userid + '.pdf');
+      var pdf_link = createLink('https://hackademy-webapi.azurewebsites.net/' + result.args.userid + '.pdf');
       client.post('statuses/update', {status: ((user.twitterId != "") ? '@'+user.twitterId : '') + ' #experiences ' + user.firstname + ' BlockChainPoint certification ' + pdf_link}, function(error, tweet, response){
         var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null )};
         user_complete.push(user_complete_new);
