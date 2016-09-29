@@ -33,14 +33,18 @@ var oauth2 = require('simple-oauth2').create({
   }
 });
 
-oauth2.clientCredentials.getToken({scope: config.scope}, (error, result) => {
-  if (error) {
-    return console.log('Access Token Error', error.message);
-  }
-  token = oauth2.accessToken.create(result).token.access_token;
-  console.log('Token : ' + token);
-  setUpBlockChainWatch();
-});
+var getToken = function() {
+  oauth2.clientCredentials.getToken({scope: config.scope}, (error, result) => {
+    if (error) {
+      return console.log('Access Token Error', error.message);
+    }
+    token = oauth2.accessToken.create(result).token.access_token;
+    console.log('Token : ' + token);
+    setUpBlockChainWatch();
+  });
+};
+
+getToken();
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -152,3 +156,7 @@ var getTime = function() {
   var d = new Date();
   return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)
 };
+
+setInterval(function() {
+  getToken();
+}, 60000);
