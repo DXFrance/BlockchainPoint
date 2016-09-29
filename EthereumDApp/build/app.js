@@ -43589,7 +43589,7 @@ window.addEventListener('load', function() {
 
     // Use the provider from the config.                        
 
-    window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); 
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode0.northeurope.cloudapp.azure.com:8545')); 
 
   }                                                             
 
