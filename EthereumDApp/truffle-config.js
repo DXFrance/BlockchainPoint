@@ -1,10 +1,10 @@
 module.exports = {
   build: {
     "index.html": "index.html",
-    "app.js": "app.js",
     "app.css": "app.css",
     "img/": "img/",
     "QR/": "QR/",
+    "scripts/": "scripts/",
     "bower_components/": "bower_components"
   },
   rpc: {

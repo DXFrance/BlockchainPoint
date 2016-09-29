@@ -119,6 +119,7 @@ body {
   border: 5px solid #0193c9;
   position: relative;
   top: 20px;
+  object-fit: inherit;
 }
 
 .content-qr #loader-video {
