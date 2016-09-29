@@ -224,7 +224,7 @@
           ],
           "properties": {
             "WEBSITE_NODE_DEFAULT_VERSION": "5.4.0",
-            "PROJECT": "EthereumDApp/app"
+            "PROJECT": "EthereumDApp/build"
           }
         },
         {
@@ -251,7 +251,8 @@
         "displayName": "Blockchain Web Api"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]"
+        "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]",
+        "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
       ],
       "properties": {
         "serverFarmId": "[variables('svcPlanName')]"

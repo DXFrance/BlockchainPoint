@@ -35,7 +35,8 @@
     <None Include="Genesis\genesis.json" />
     <None Include="README.md" />
     <None Include="Scripts\configure-geth.sh" />
-    <None Include="Scripts\start-private-blockchain - Copy.sh" />
+    <None Include="Scripts\start-manuel-nodekey.sh" />
+    <None Include="Scripts\start-private-blockchain.sh" />
     <None Include="Scripts\start-manuel-bootlog.sh" />
     <None Include="Templates\globaldeploy.json" />
     <None Include="Templates\webappdeploy.json" />
