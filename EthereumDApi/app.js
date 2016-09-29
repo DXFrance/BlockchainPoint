@@ -12,6 +12,8 @@ var config = require('./config');
 var token;
 var request = require('sync-request');
 var user_complete = certified;
+var cors = require('cors');
+
 
 var Twitter = require('twitter');
 var client = new Twitter({
@@ -41,6 +43,9 @@ oauth2.clientCredentials.getToken({scope: config.scope}, (error, result) => {
   console.log('Token : ' + token);
   setUpBlockChainWatch();
 });
+
+app.use(cors());
+app.options('*', cors());
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
