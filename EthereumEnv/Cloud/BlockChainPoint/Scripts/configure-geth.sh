@@ -62,6 +62,14 @@ time sudo add-apt-repository ppa:ethereum/ethereum -y
 time sudo apt-get update
 time sudo apt-get install solc -y
 
+time sudo apt-get install git -y
+time sudo apt-get install npm -y
+
+git clone https://github.com/cubedro/eth-net-intelligence-api
+cd eth-net-intelligence-api
+npm install
+sudo npm install -g pm2
+
 # Fetch Genesis and Private Key
 cd $HOMEDIR
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
