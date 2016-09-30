@@ -18,18 +18,22 @@ body {
 
 .head {
   min-height: 175px;
-  border-bottom: 1px solid #55545a;
+  border-bottom: 1px solid #c9c8cd;
+}
+
+.head-logo .img {
+  width: 50%;
+  margin-top: 80px;
 }
 
 .head-logo img {
   position: relative;
-  top: 20px;
   width: 100%;
 }
 
 .head-list div {
   height: 70px;
-  border-left: 1px solid #55545a;
+  border-left: 1px solid #c9c8cd;
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -69,7 +73,7 @@ body {
 }
 
 .title-3 {
-  color: #55545a;
+  color: #c9c8cd;
   font-size: 85px;
   position: absolute;
   right: 30px;
@@ -86,12 +90,12 @@ body {
   height: 10px;
   display: inline-block;
   border-radius: 50%;
-  border: 1px solid #55545a;
+  border: 1px solid #c9c8cd;
   background: #19191a;
 }
 
 .content-qr p {
-  color: #56565b;
+  color: #c9c8cd;
   text-align: center;
   padding-top: 50px;
   font-size: 15px;
@@ -171,16 +175,16 @@ body {
 .content-list ul li {
   height: 90px;
   width: 100%;
-  border-left: 1px solid #55545a;
-  border-right: 1px solid #55545a;
-  border-bottom: 1px solid #55545a;
+  border-left: 1px solid #c9c8cd;
+  border-right: 1px solid #c9c8cd;
+  border-bottom: 1px solid #c9c8cd;
   position: relative;
   padding-left: 85px;
   transition: 0.2s linear all;
 }
 
 .content-list ul li .date {
-  color: #56565b;
+  color: #c9c8cd;
   position: absolute;
   left: -54px;
   top: 50%;
@@ -199,7 +203,7 @@ body {
 
 .content-list ul li .name {
   display: block;
-  color: #56565b;
+  color: #c9c8cd;
   font-weight: 500;
   font-size: 23px;
   position: relative;
@@ -208,14 +212,14 @@ body {
 }
 
 .content-list ul li .status {
-  color: #56565b;
+  color: #c9c8cd;
   position: relative;
   top: 15px;
   transition: 0.2s linear all;
 }
 
 .content-list ul li i.icone {
-  color: #56565b;
+  color: #c9c8cd;
   font-size: 32px;
   position: absolute;
   top: 50%;
@@ -244,7 +248,7 @@ body {
 }
 
 .content-certification ul li .fa-twitter {
-  color: #56565b;
+  color: #c9c8cd;
   font-size: 28px;
   position: relative;
   margin-left: 5px;

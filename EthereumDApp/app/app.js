@@ -77,7 +77,7 @@ $(document).ready(function() {
 // Send transaction to blockchain
 
 function sendToBlockchain(id, user, step) {
-  var account_testrpc = "0x9a1cfec1bbc5c5b2eafe12f82267c47369e9b7fc";
+  var account_testrpc = "0x2d25b29a35010dde488ab594521bdad7d1a75291";
   var account_production = "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
@@ -116,6 +116,7 @@ $('.content-certification ul').on('click', '.fa-twitter', function() {
 });
 
 var socket = io.connect('https://hackademy-webapi.azurewebsites.net');
+//var socket = io.connect('http://localhost:1996');
 socket.on('user_complete', function(users_complete) {
   for (var i = 0, len = users_complete.length; i < len; i++) {
     if (certified.indexOf(users_complete[i].id) == -1) {
