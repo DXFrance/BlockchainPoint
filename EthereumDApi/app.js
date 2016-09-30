@@ -14,7 +14,6 @@ var request = require('sync-request');
 var user_complete = certified;
 var cors = require('cors');
 
-
 var Twitter = require('twitter');
 var client = new Twitter({
   consumer_key: 'kzNrHYM4362CnMKm6jbGFuDPH',
@@ -82,6 +81,7 @@ var abi = ChainPoint.all_networks['default'].abi;
 var address = "0x317b3e75b9c316497c006eebd316b1254504c4b8";
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://hackminingnode0.northeurope.cloudapp.azure.com:8545"));
+//var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 var contract = web3.eth.contract(abi).at(address);
 
@@ -144,10 +144,16 @@ function setUpBlockChainWatch() {
     console.log(result.args.userid);
     console.log(result.args.username);
     var user = getUser(result.args.userid);
-    var html_data = ejs.render(html, { firstname: user.firstname, lastname: user.lastname });
+    var html_data = ejs.render(html, { firstname: user.firstname, time: getDateTime(), hash: {
+      transaction: result.transactionHash,
+      block: result.blockHash,
+      number: result.blockNumber
+    }});
     pdf.create(html_data, {format: 'Letter'}).toFile('public/' + result.args.userid + '.pdf', function(err, response) {
       var pdf_link = createLink('https://hackademy-webapi.azurewebsites.net/' + result.args.userid + '.pdf');
-      client.post('statuses/update', {status: ((user.twitterId != "") ? '@'+user.twitterId : '') + ' #experiences ' + user.firstname + ' BlockChainPoint certification ' + pdf_link}, function(error, tweet, response){
+      client.post('statuses/update', {
+          status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
+        }, function(error, tweet, response){
         var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null )};
         user_complete.push(user_complete_new);
         fs.writeFile('certified.json', JSON.stringify(user_complete), 'utf8');
@@ -156,12 +162,16 @@ function setUpBlockChainWatch() {
     });
   });
 }
-
 var getTime = function() {
   var d = new Date();
   return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)
 };
 
+var getDateTime = function() {
+  var d = new Date();
+  return ('0' + d.getDate()).slice(-2) + "/" + ('0' + d.getMonth()).slice(-2) + "/" + d.getFullYear() + " " + getTime()
+};
+
 setInterval(function() {
   getToken();
-}, 60000);
+}, 3600000);
