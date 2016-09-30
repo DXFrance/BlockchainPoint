@@ -5323,10 +5323,10 @@ y=m.length;if(w>y&&m.unshift(0),r(_,m,w,u),w=_.length,-1==f)for(;n(D,_,F,w)<1;)d
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.__contracts__ = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = {
-  "ChainPoint": require("c:\\Users\\pierlag\\Documents\\GitHub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js"),
-  "Migrations": require("c:\\Users\\pierlag\\Documents\\GitHub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
+  "ChainPoint": require("C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js"),
+  "Migrations": require("C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
 };
-},{"c:\\Users\\pierlag\\Documents\\GitHub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js":221,"c:\\Users\\pierlag\\Documents\\GitHub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js":222}],2:[function(require,module,exports){
+},{"C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js":221,"C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js":222}],2:[function(require,module,exports){
 var asn1 = exports;
 
 asn1.bignum = require('bn.js');
@@ -26840,7 +26840,7 @@ module.exports={
         "spec": ">=6.2.3 <7.0.0",
         "type": "range"
       },
-      "C:\\Users\\pierlag\\AppData\\Roaming\\npm\\node_modules\\truffle\\node_modules\\secp256k1"
+      "C:\\Users\\stephgou.EUROPE\\AppData\\Roaming\\npm\\node_modules\\truffle\\node_modules\\secp256k1"
     ]
   ],
   "_from": "elliptic@>=6.2.3 <7.0.0",
@@ -26877,7 +26877,7 @@ module.exports={
   "_shasum": "e4c81e0829cf0a65ab70e998b8232723b5c1bc48",
   "_shrinkwrap": null,
   "_spec": "elliptic@^6.2.3",
-  "_where": "C:\\Users\\pierlag\\AppData\\Roaming\\npm\\node_modules\\truffle\\node_modules\\secp256k1",
+  "_where": "C:\\Users\\stephgou.EUROPE\\AppData\\Roaming\\npm\\node_modules\\truffle\\node_modules\\secp256k1",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -29012,6 +29012,7 @@ function decrypt (data, password) {
 (function (process,Buffer){
 var createHmac = require('create-hmac')
 var checkParameters = require('./precondition')
+var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
 
 exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback) {
   if (typeof digest === 'function') {
@@ -29027,14 +29028,7 @@ exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback)
   })
 }
 
-var defaultEncoding
-if (process.browser) {
-  defaultEncoding = 'utf-8'
-} else {
-  var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
-
-  defaultEncoding = pVersionMajor >= 6 ? 'utf-8' : 'binary'
-}
+var defaultEncoding = (process.browser || pVersionMajor >= 6) ? 'utf-8' : 'binary'
 
 exports.pbkdf2Sync = function (password, salt, iterations, keylen, digest) {
   if (!Buffer.isBuffer(password)) password = new Buffer(password, defaultEncoding)
@@ -42717,9 +42711,9 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         "type": "event"
       }
     },
-    "updated_at": 1475254151206,
+    "updated_at": 1475255148561,
     "links": {},
-    "address": "0x317b3e75b9c316497c006eebd316b1254504c4b8"
+    "address": "0x770947bf54dad3de48ab62be1a05178c21afcd1c"
   },
   "default": {
     "abi": [
@@ -43380,8 +43374,8 @@ var SolidityEvent = require("web3/lib/web3/event.js");
     ],
     "unlinked_binary": "0x606060405260008054600160a060020a03191633179055610130806100246000396000f3606060405260e060020a60003504630900f010811461003c578063445df0ac146100c05780638da5cb5b146100c9578063fdacd576146100db575b005b61003a60043560008054600160a060020a039081163390911614156100bc57604080516001547ffdacd576000000000000000000000000000000000000000000000000000000008252600482015290518392600160a060020a0384169263fdacd5769260248281019392829003018183876161da5a03f115610002575050505b5050565b61010160015481565b610113600054600160a060020a031681565b61003a60043560005433600160a060020a03908116911614156100fe5760018190555b50565b60408051918252519081900360200190f35b60408051600160a060020a03929092168252519081900360200190f3",
     "events": {},
-    "updated_at": 1475254151222,
-    "address": "0x4920b399ed259471b46d6fe25e8890919d9fcfa8",
+    "updated_at": 1475255148565,
+    "address": "0xde76f02594926468b06da993eb19dbbd4af792e0",
     "links": {}
   },
   "default": {
@@ -43599,7 +43593,7 @@ window.addEventListener('load', function() {
 
     // Use the provider from the config.                        
 
-    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode0.northeurope.cloudapp.azure.com:8545')); 
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode2.northeurope.cloudapp.azure.com:8545')); 
 
   }                                                             
 
@@ -43682,7 +43676,7 @@ function resultHandler (err, result) {
 qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
-  contract = ChainPoint.at("0x317b3e75b9c316497c006eebd316b1254504c4b8");
+  contract = ChainPoint.at("0x770947bf54dad3de48ab62be1a05178c21afcd1c");
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
     console.log("CheckPoint!");

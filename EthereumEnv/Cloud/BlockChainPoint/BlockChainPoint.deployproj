@@ -33,6 +33,7 @@
     <Content Include="Templates\azuredeploy.json" />
     <Content Include="Templates\azuredeploy.parameters.json" />
     <None Include="Genesis\genesis.json" />
+    <None Include="Netstats\app.json" />
     <None Include="README.md" />
     <None Include="Scripts\configure-geth.sh" />
     <None Include="Scripts\start-manuel-nodekey.sh" />

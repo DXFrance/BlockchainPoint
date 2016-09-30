@@ -81,9 +81,9 @@ var ChainPoint = require('./ChainPoint.sol.js');
 var Web3 = require('web3');
 
 var abi = ChainPoint.all_networks['default'].abi;
-var address = "0x317b3e75b9c316497c006eebd316b1254504c4b8";
+var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
 
-var web3 = new Web3(new Web3.providers.HttpProvider("http://hackminingnode0.northeurope.cloudapp.azure.com:8545"));
+var web3 = new Web3(new Web3.providers.HttpProvider("http://hackminingnode2.northeurope.cloudapp.azure.com:8545"));
 //var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 var contract = web3.eth.contract(abi).at(address);

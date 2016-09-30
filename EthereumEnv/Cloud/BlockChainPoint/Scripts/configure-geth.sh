@@ -51,7 +51,7 @@ time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 ####################
 # Setup Geth
 ####################
-time sudo apt-get -y git
+time sudo apt-get --yes install git
 time sudo apt-get install -y software-properties-common
 time sudo add-apt-repository -y ppa:ethereum/ethereum
 time sudo apt-get update
@@ -64,18 +64,32 @@ time sudo add-apt-repository ppa:ethereum/ethereum -y
 time sudo apt-get update
 time sudo apt-get install solc -y
 
-time sudo apt-get install git -y
-time sudo apt-get install npm -y
+time sudo apt-get install nodejs-legacy
+
+# Fetch Genesis and Private Key
+cd $HOMEDIR
+wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
+wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/start-private-blockchain.sh
+
+#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
+git clone https://github.com/ethersphere/eth-utils.git
+cd eth-utils
+npm install
+
+git clone https://github.com/cubedro/eth-netstats
+cd eth-netstats
+npm install
+WS_SECRET="eth-net-stats-has-a-secret" npm start
+
+#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 
 git clone https://github.com/cubedro/eth-net-intelligence-api
 cd eth-net-intelligence-api
 npm install
 sudo npm install -g pm2
 
-# Fetch Genesis and Private Key
-cd $HOMEDIR
-wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
-wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/start-private-blockchain.sh
+#after udpate of the app.json
+#pm2 start app.json
 
 date
 geth init genesis.json
