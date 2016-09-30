@@ -14,6 +14,9 @@ var request = require('sync-request');
 var user_complete = certified;
 var cors = require('cors');
 
+var sha256 = require('sha256');
+var btoa = require('btoa');
+
 var Twitter = require('twitter');
 var client = new Twitter({
   consumer_key: 'kzNrHYM4362CnMKm6jbGFuDPH',
@@ -150,7 +153,20 @@ function setUpBlockChainWatch() {
       number: result.blockNumber
     }});
     pdf.create(html_data, {format: 'Letter'}).toFile('public/' + result.args.userid + '.pdf', function(err, response) {
+
       var pdf_link = createLink('https://hackademy-webapi.azurewebsites.net/' + result.args.userid + '.pdf');
+
+      var WOOLEET = request('POST', 'https://api.woleet.io/v1/anchor', {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
+          },
+          json: {
+            name: 'BlockChainPoint - '+result.args.username,
+            hash: sha256(pdf_link)
+          }
+      });
+
       client.post('statuses/update', {
           status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
         }, function(error, tweet, response){
