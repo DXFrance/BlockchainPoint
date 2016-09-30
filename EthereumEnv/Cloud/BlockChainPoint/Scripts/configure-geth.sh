@@ -21,6 +21,7 @@ ETHEREUM_ACCOUNT_PWD="${2}"
 ETHEREUM_ACCOUNT_KEY="${3}"
 ETHEREUM_NETWORK_ID="${4}"
 ETHEREUM_ACCOUNT_ADDRESS="${5}"
+ETHEREUM_NODE_IDENTITY="${6}"
 
 HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
@@ -39,6 +40,7 @@ echo "ETHEREUM_NETWORK_ID: $ETHEREUM_NETWORK_ID"
 echo "ETHEREUM_ACCOUNT_PWD_FILE: $ETHEREUM_ACCOUNT_PWD_FILE"
 echo "ETHEREUM_ACCOUNT_KEY_FILE: $ETHEREUM_ACCOUNT_KEY_FILE"
 echo "GETH_LOG_FILE_PATH: $GETH_LOG_FILE_PATH"
+echo "ETHEREUM_NODE_IDENTITY: $ETHEREUM_NODE_IDENTITY"
 
 #####################
 # setup the Azure CLI
@@ -62,6 +64,14 @@ time sudo add-apt-repository ppa:ethereum/ethereum -y
 time sudo apt-get update
 time sudo apt-get install solc -y
 
+time sudo apt-get install git -y
+time sudo apt-get install npm -y
+
+git clone https://github.com/cubedro/eth-net-intelligence-api
+cd eth-net-intelligence-api
+npm install
+sudo npm install -g pm2
+
 # Fetch Genesis and Private Key
 cd $HOMEDIR
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
@@ -83,6 +93,6 @@ echo "===== Prefunded Etehreum Account imported =====";
 #start blockchain
 
 #sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
-sh "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}" </dev/null 2>&1 &
+sh "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}"  "${ETHEREUM_NODE_IDENTITY}"  </dev/null 2>&1 &
 
 echo "===== Started geth node =====";
