@@ -2,6 +2,7 @@ module.exports = {
   build: {
     "index.html": "index.html",
     "app.css": "app.css",
+    "app.js": "app.js",
     "img/": "img/",
     "js/": "js/",
     "bower_components/": "bower_components"
