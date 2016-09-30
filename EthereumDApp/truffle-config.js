@@ -3,8 +3,7 @@ module.exports = {
     "index.html": "index.html",
     "app.css": "app.css",
     "img/": "img/",
-    "QR/": "QR/",
-    "app.js": "app.js",
+    "js/": "js/",
     "bower_components/": "bower_components"
   },
   rpc: {

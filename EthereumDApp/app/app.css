@@ -104,7 +104,7 @@ body {
 }
 
 .content-qr .video-handler {
-  width: 50%;
+  width: 80%;
   margin: auto;
   position: relative;
 }
@@ -122,8 +122,11 @@ body {
   margin: auto;
   border: 5px solid #0193c9;
   position: relative;
-  top: 20px;
+  top: 0px;
   object-fit: inherit;
+  transform: rotateY(180deg);
+-webkit-transform:rotateY(180deg); /* Safari and Chrome */
+-moz-transform:rotateY(180deg); /* Firefox */
 }
 
 .content-qr #loader-video {
@@ -267,4 +270,15 @@ body {
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
     border-radius: 0px !important;
+}
+
+.focus {
+  width: 30%;
+ height: 40%;
+ position: absolute;
+ border: 1px solid #ffffff;
+ z-index: 5;
+ top: 50%;
+ transform: translateX(-50%) translateY(-50%);
+ left: 50%;
 }
