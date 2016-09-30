@@ -7,7 +7,6 @@ contract ChainPoint {
     uint date;
     bool step1;
     bool step2;
-    bool step3;
   }
 
   // Map userid (GUID) to checkpoint struct
@@ -24,19 +23,17 @@ contract ChainPoint {
   function check(string userid, string username, uint step) {
     // Store checkpoint
     if (checkpoints[userid].date == 0) {
-      checkpoints[userid] = CheckPoint(username, now, false, false, false);
+      checkpoints[userid] = CheckPoint(username, now, false, false);
     }
     if (step == 0) checkpoints[userid].step1 = true;
     if (step == 1) checkpoints[userid].step2 = true;
-    if (step == 2) checkpoints[userid].step3 = true;
 
     // Send event for the checkpoint
     CheckPointAchieved(userid, username, step);
     
     // Check if all steps done
     if (checkpoints[userid].step1 &&
-      checkpoints[userid].step2 &&
-      checkpoints[userid].step3) {
+      checkpoints[userid].step2  {
         // Check event for the end of journey
         JourneyAchieved(userid, username);
       }
