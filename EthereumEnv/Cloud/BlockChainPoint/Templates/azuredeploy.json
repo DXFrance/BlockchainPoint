@@ -158,6 +158,7 @@
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",
     "webAppName": "[concat(parameters('resourceNamePrefix'),'-WebApp')]",
+    "ethereumNodeIdPrefix": "[concat(parameters('resourceNamePrefix'),'-EthereumNode-')]",
     "webAppSourceControlRepositoryUrl": "https://github.com/DXFrance/BlockchainPoint.git",
     "webAppSourceControlBranch": "master",
     "apiVersion": "2015-06-15",
@@ -517,7 +518,7 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\"')]"
         }
       }
     }
