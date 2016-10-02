@@ -166,6 +166,7 @@ function setUpBlockChainWatch() {
             hash: sha256(pdf_link)
           }
       });
+      woleet_anchor = JSON.parse(woleet_anchor.getBody('utf8'));
 
       client.post('statuses/update', {
           status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
