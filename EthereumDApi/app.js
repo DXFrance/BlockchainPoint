@@ -156,7 +156,7 @@ function setUpBlockChainWatch() {
 
       var pdf_link = createLink('https://hackademy-webapi.azurewebsites.net/' + result.args.userid + '.pdf');
 
-      var WOLEET = request('POST', 'https://api.woleet.io/v1/anchor', {
+      var woleet_anchor = request('POST', 'https://api.woleet.io/v1/anchor', {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
@@ -170,7 +170,7 @@ function setUpBlockChainWatch() {
       client.post('statuses/update', {
           status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
         }, function(error, tweet, response){
-        var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null ), woleet : WOLEET};
+        var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null ), woleet :  woleet_anchor};
         user_complete.push(user_complete_new);
         fs.writeFile('certified.json', JSON.stringify(user_complete), 'utf8');
         io.sockets.emit('user_complete_new', user_complete_new);
