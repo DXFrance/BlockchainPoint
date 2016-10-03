@@ -147,7 +147,31 @@ function getUser(id) {
           'Authorization': 'Bearer ' + token
       }
   });
-  user = JSON.parse(user.getBody('utf8'));
+  if (user.statusCode > 300)
+  {
+      user = request('GET', 'https://api.inwink.com/' + config.event_id + '/speaker/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+      });
+      if (user.statusCode > 300)
+      {
+          user = request('GET', 'https://api.inwink.com/' + config.event_id + '/exhibitor/account/' + id, {
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer ' + token
+                      }
+          });
+          if (user.statusCode > 300)
+          {
+              user = null;
+          }
+      }
+  }
+
+  if (user != null)
+    user = JSON.parse(user.getBody('utf8'));
 
   return user;
 }
