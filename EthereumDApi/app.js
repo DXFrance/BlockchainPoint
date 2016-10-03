@@ -200,9 +200,9 @@ function setUpBlockChainWatch() {
       client.post('statuses/update', {
           status: "#experiences " 
             + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) 
-            + " a essayé la blockchain avec nous! La preuve: " 
+            + " a essayé la blockchain avec nous ! La preuve " 
             + pdf_link 
-            + " ancre @woleet: " 
+            + " est ancrée @woleet " 
             + createLink("http://hackademy-webapi.azurewebsites.net/anchor/" + woleet_anchor.id)
         }, function(error, tweet, response){
         var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null ), woleet :  woleet_anchor};
