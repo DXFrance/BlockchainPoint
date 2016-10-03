@@ -200,6 +200,7 @@ function setUpBlockChainWatch() {
     console.log(result.args.userid);
     console.log(result.args.username);
     var user = getUser(result.args.userid);
+    console.log(user);
     var html_data = ejs.render(html, { firstname: user.firstname, time: getDateTime(), hash: {
       transaction: result.transactionHash,
       block: result.blockHash,
