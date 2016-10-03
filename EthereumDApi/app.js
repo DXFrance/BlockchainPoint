@@ -75,6 +75,35 @@ app.post('/auth', function(req, res){
   return res.json(getUser(id));
 });
 
+// Check anchor
+app.get('/anchor/:id', function(req, res) {
+  var id = req.params.id;
+  var woleet_anchor = request('GET', 'https://api.woleet.io/v1/anchor/' + id, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
+    }
+  });
+  var anchor_body = woleet_anchor.getBody('utf8');
+  var anchor = JSON.parse(anchor_body);
+  if (anchor.status == 'CONFIRMED') {
+    // Retrieve and display the receipt
+    var woleet_receipt = request('GET', 'https://api.woleet.io/receipt/' + id, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
+      }
+    });
+    var receipt_body = woleet_receipt.getBody('utf8');
+    var receipt = JSON.parse(receipt_body);
+  }
+  return res.render('anchor', {
+    anchorJson: JSON.stringify(anchor, null, 2), 
+    status: anchor.status, 
+    receiptJson: JSON.stringify(receipt, null, 2)
+  });
+});
+
 // Blockchain events
 
 var ChainPoint = require('./ChainPoint.sol.js');
@@ -169,7 +198,7 @@ function setUpBlockChainWatch() {
       woleet_anchor = JSON.parse(woleet_anchor.getBody('utf8'));
 
       client.post('statuses/update', {
-          status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
+          status: "#experiences " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " a essayé la blockchain avec nous! La preuve: " + pdf_link + " ancré: " + woleet_anchor.id
         }, function(error, tweet, response){
         var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null ), woleet :  woleet_anchor};
         user_complete.push(user_complete_new);
@@ -179,6 +208,7 @@ function setUpBlockChainWatch() {
     });
   });
 }
+
 var getTime = function() {
   var d = new Date();
   return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)
