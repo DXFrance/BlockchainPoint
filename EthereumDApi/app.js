@@ -223,7 +223,7 @@ function setUpBlockChainWatch() {
 
       client.post('statuses/update', {
           status: "#experiences " 
-            + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) 
+            + (((user.twitterId != "") || (user.twitterId != undefined)) ? '@'+user.twitterId : result.args.username) 
             + " a essayé la blockchain avec nous ! La preuve " 
             + pdf_link 
             + " est ancrée @woleet " 
