@@ -19,10 +19,10 @@ var btoa = require('btoa');
 
 var Twitter = require('twitter');
 var client = new Twitter({
-  consumer_key: 'kzNrHYM4362CnMKm6jbGFuDPH',
-  consumer_secret: 'ln3OQsIYt2JoE0Rx9LHkBp4eSIgo9omJPxFrcGGg3YuAQpqTUC',
-  access_token_key: '780674269206355968-CnZsI20Rq5vd8bcD4aNuIXicRDsqjCg',
-  access_token_secret: '4nFOQnGvmVlFl8H7WpnhvE3chiOLmdHJa3YwvhvXMEPc4'
+  consumer_key: 'q5yuIouiDvVJDKKbiIp4zhOBJ',
+  consumer_secret: '8Mf2DjLcuXPdZbYlqJ3eRBrSelKaxyDRMEUwnfzE3U4OfrNWEV',
+  access_token_key: '783286632829124608-J8xrrbmHdTuQBKvGIzjiCW8lPVYKgWr',
+  access_token_secret: 'AKZVnC0Vu5qzlYYDzyzlX8VeVZrlTRO9H9J44LMDS3avE'
 });
 
 var oauth2 = require('simple-oauth2').create({
