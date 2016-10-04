@@ -88,7 +88,7 @@ app.get('/anchor/:id', function(req, res) {
   var anchor = JSON.parse(anchor_body);
   if (anchor.status == 'CONFIRMED') {
     // Retrieve and display the receipt
-    var woleet_receipt = request('GET', 'https://api.woleet.io/receipt/' + id, {
+    var woleet_receipt = request('GET', 'https://api.woleet.io/v1/receipt/' + id, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
