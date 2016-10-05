@@ -44,7 +44,7 @@ var getToken = function() {
     }
     token = oauth2.accessToken.create(result).token.access_token;
     console.log('Token : ' + token);
-    setUpBlockChainWatch();
+    setUpBlockChainWatch(); // TODO: add callback
   });
 };
 
@@ -183,7 +183,12 @@ function createLink(link) {
   return bitly;
 }
 
+var setupOK = false;
+
 function setUpBlockChainWatch() {
+  if (setupOK) return; // Only run once
+  setupOK = true;
+
   var logs = contract.JourneyAchieved({fromBlock: 'latest'});
 
   logs.watch(function(error, result) {
