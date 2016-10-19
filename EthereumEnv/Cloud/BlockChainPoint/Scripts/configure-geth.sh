@@ -1,12 +1,12 @@
 #!/bin/bash
 
-function usage()
- {
+usage()
+{
     echo "INFO:"
     echo "Usage:...."
 }
 
-function error_log()
+error_log()
 {
     if [ "$?" != "0" ]; then
         log "$1"
@@ -15,13 +15,13 @@ function error_log()
     fi
 }
 
-function log()
+log()
 {
   mess="$(hostname): $1"
   logger -t "${BASH_SCRIPT}" "${mess}"
 }
 
-function install_prerequisites()
+install_prerequisites()
 {
     log "Update System ..."
     until apt-get --yes update
