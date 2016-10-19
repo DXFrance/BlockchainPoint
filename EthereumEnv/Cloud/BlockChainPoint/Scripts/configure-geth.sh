@@ -51,16 +51,26 @@ install_prerequisites()
       sleep 2
     done
 
+	log "Update System ..."
+    until apt-get --yes update
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
     log "Install node ..."
     until apt-get install nodejs-legacy
-
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
     done
 
 	log "Install npm ..."
-	curl https://npmjs.org/install.sh | sudo sh
+    until apt-get install npm
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
 
 }
 
