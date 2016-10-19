@@ -19,10 +19,10 @@ var btoa = require('btoa');
 
 var Twitter = require('twitter');
 var client = new Twitter({
-  consumer_key: 'kzNrHYM4362CnMKm6jbGFuDPH',
-  consumer_secret: 'ln3OQsIYt2JoE0Rx9LHkBp4eSIgo9omJPxFrcGGg3YuAQpqTUC',
-  access_token_key: '780674269206355968-CnZsI20Rq5vd8bcD4aNuIXicRDsqjCg',
-  access_token_secret: '4nFOQnGvmVlFl8H7WpnhvE3chiOLmdHJa3YwvhvXMEPc4'
+  consumer_key: 'q5yuIouiDvVJDKKbiIp4zhOBJ',
+  consumer_secret: '8Mf2DjLcuXPdZbYlqJ3eRBrSelKaxyDRMEUwnfzE3U4OfrNWEV',
+  access_token_key: '783286632829124608-J8xrrbmHdTuQBKvGIzjiCW8lPVYKgWr',
+  access_token_secret: 'AKZVnC0Vu5qzlYYDzyzlX8VeVZrlTRO9H9J44LMDS3avE'
 });
 
 var oauth2 = require('simple-oauth2').create({
@@ -44,7 +44,7 @@ var getToken = function() {
     }
     token = oauth2.accessToken.create(result).token.access_token;
     console.log('Token : ' + token);
-    setUpBlockChainWatch();
+    setUpBlockChainWatch(); // TODO: add callback
   });
 };
 
@@ -73,6 +73,35 @@ app.use(bodyParser.urlencoded({
 app.post('/auth', function(req, res){
   var id = req.body.id;
   return res.json(getUser(id));
+});
+
+// Check anchor
+app.get('/anchor/:id', function(req, res) {
+  var id = req.params.id;
+  var woleet_anchor = request('GET', 'https://api.woleet.io/v1/anchor/' + id, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
+    }
+  });
+  var anchor_body = woleet_anchor.getBody('utf8');
+  var anchor = JSON.parse(anchor_body);
+  if (anchor.status == 'CONFIRMED') {
+    // Retrieve and display the receipt
+    var woleet_receipt = request('GET', 'https://api.woleet.io/v1/receipt/' + id, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa('tconte@microsoft.com:6Q8UkKCrSl8=')
+      }
+    });
+    var receipt_body = woleet_receipt.getBody('utf8');
+    var receipt = JSON.parse(receipt_body);
+  }
+  return res.render('anchor', {
+    anchorJson: JSON.stringify(anchor, null, 2), 
+    status: anchor.status, 
+    receiptJson: JSON.stringify(receipt, null, 2)
+  });
 });
 
 // Blockchain events
@@ -118,7 +147,31 @@ function getUser(id) {
           'Authorization': 'Bearer ' + token
       }
   });
-  user = JSON.parse(user.getBody('utf8'));
+  if (user.statusCode > 300)
+  {
+      user = request('GET', 'https://api.inwink.com/' + config.event_id + '/speaker/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+      });
+      if (user.statusCode > 300)
+      {
+          user = request('GET', 'https://api.inwink.com/' + config.event_id + '/exhibitor/account/' + id, {
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer ' + token
+                      }
+          });
+          if (user.statusCode > 300)
+          {
+              user = null;
+          }
+      }
+  }
+
+  if (user != null)
+    user = JSON.parse(user.getBody('utf8'));
 
   return user;
 }
@@ -130,7 +183,12 @@ function createLink(link) {
   return bitly;
 }
 
+var setupOK = false;
+
 function setUpBlockChainWatch() {
+  if (setupOK) return; // Only run once
+  setupOK = true;
+
   var logs = contract.JourneyAchieved({fromBlock: 'latest'});
 
   logs.watch(function(error, result) {
@@ -169,9 +227,14 @@ function setUpBlockChainWatch() {
       woleet_anchor = JSON.parse(woleet_anchor.getBody('utf8'));
 
       client.post('statuses/update', {
-          status: "#addyourblock " + ((user.twitterId != "") ? '@'+user.twitterId : result.args.username) + " s'est essayé à la blockchain avec nous ! La preuve ici: " + pdf_link
+          status: "#experiences " 
+            + (((user.twitter != undefined) && (user.twitter != "")) ? '@'+user.twitter : result.args.username) 
+            + " a essayé la blockchain avec nous ! La preuve " 
+            + pdf_link 
+            + " est ancrée @woleet " 
+            + createLink("http://hackademy-webapi.azurewebsites.net/anchor/" + woleet_anchor.id)
         }, function(error, tweet, response){
-        var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/BlockChainPoint/status/' + tweet.id_str : null ), woleet :  woleet_anchor};
+        var user_complete_new = {id: result.args.userid, username: result.args.username, pdf: pdf_link, time: getTime(), twitter: ((typeof tweet.id_str !== "undefined") ? 'https://twitter.com/chainhackademy/status/' + tweet.id_str : null ), woleet :  woleet_anchor};
         user_complete.push(user_complete_new);
         fs.writeFile('certified.json', JSON.stringify(user_complete), 'utf8');
         io.sockets.emit('user_complete_new', user_complete_new);
@@ -179,6 +242,7 @@ function setUpBlockChainWatch() {
     });
   });
 }
+
 var getTime = function() {
   var d = new Date();
   return ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2)

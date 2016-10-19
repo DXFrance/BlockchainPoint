@@ -101,7 +101,7 @@
                                                                   <td height="45">&nbsp;</td>
                                                                </tr>
                                                                <tr>
-                                                                  <td align="left" valign="top" style="font-family:&#39;Segoe UI&#39;, Arial; font-size:23px; color:#ffffff; text-decoration:none; ">Félicitations <%= firstname %> ! Votre visite est maintenant ancrée dans une blockchain !</td>
+                                                                  <td align="left" valign="top" style="font-family:&#39;Segoe UI&#39;, Arial; font-size:23px; color:#ffffff; text-decoration:none; ">Confirmation d'ancrage</td>
                                                                </tr>
                                                                <tr>
                                                                   <td height="30">&nbsp;</td>
@@ -136,15 +136,17 @@
                                                    </tr>
                                                    <tr>
                                                       <td align="left" valign="top" style="font-family:&#39;Segoe UI&#39;, Arial; font-size:17px; color:#505050;">
-                                                        Cher visiteur,<br><br>
-                                                        Ce document constitue la preuve de votre passage à Blockchain Hackademy. Celui-ci a été générée à l'aide d'un smart contract dont l'opération a été enregistrée dans le block suivant:<br><br>
-                                                        Block Hash: <%= hash.block %><br>
-                                                        Transaction Hash: <%= hash.transaction %><br>
-                                                        Block miné le: <%= time %><br><br>
-                                                        Ce PDF est également ancré dans une blockchain publique. Pour le vérifier rien de plus simple: cliquez sur le second lien présent dans le tweet !<br><br>
-                                                        <img style="width: 100%;" src="http://dev.microsoft.fr/Bots/images/general/slide.png"><br><br>
-                                                        Le code de la démo est open source et <a href="https://github.com/DXFrance/BlockchainPoint" target="_blank">disponible</a> sur GithHub.<br>
-                                                        Nous espérons que l'expérience Blockchain Hackademy vous a plu ! N'hésitez pas à nous faire un feedback !
+                                                        <p>Voici votre ancre Woleet:</p>
+                                                        <pre><%= anchorJson %></pre>
+                                                        <% if(status != 'CONFIRMED') { %>
+                                                        <p><b>Votre ancre n'a pas encore été confirmée</b>. Veuillez réessayer plus tard pour récupérer votre reçu incluant les coordonnées de la confirmation dans la blockchain Bitcoin.</p>
+                                                        <% } else { %>
+                                                        <p>Et voici votre reçu au format <a href="https://www.chainpoint.org/">ChainPoint</a>:</p>
+                                                        <pre><%= receiptJson %></pre>
+                                                        <% } %>
+                                                        <p><img style="width: 100%;" src="http://dev.microsoft.fr/Bots/images/general/slide.png"><br><br></p>
+                                                        <p>Le code de la démo est open source et <a href="https://github.com/DXFrance/BlockchainPoint" target="_blank">disponible</a> sur GithHub.<br>
+                                                        Nous espérons que l'expérience Blockchain Hackademy vous a plu ! N'hésitez pas à nous faire un feedback !</p>
                                                       </td>
                                                    </tr>
                                                    <tr>
