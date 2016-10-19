@@ -172,16 +172,16 @@ git clone https://github.com/ethersphere/eth-utils.git
 
 git clone https://github.com/cubedro/eth-netstats
 cd eth-netstats
-npm install
-export WS_SECRET="eth-net-stats-has-a-secret"
-npm start
+npm install > /dev/null 2>&1
+#export WS_SECRET="eth-net-stats-has-a-secret"
+#npm start
 cd ..
 
 #https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 git clone https://github.com/cubedro/eth-net-intelligence-api
 cd eth-net-intelligence-api
-npm install
-npm install -g pm2
+npm install > /dev/null 2>&1
+npm install -g pm2 > /dev/null 2>&1
 cd ..
 #after udpate of the app.json
 #pm2 start app.json
