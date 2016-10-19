@@ -42,6 +42,8 @@ echo "ETHEREUM_ACCOUNT_KEY_FILE: $ETHEREUM_ACCOUNT_KEY_FILE"
 echo "GETH_LOG_FILE_PATH: $GETH_LOG_FILE_PATH"
 echo "ETHEREUM_NODE_IDENTITY: $ETHEREUM_NODE_IDENTITY"
 
+cd $HOMEDIR
+
 #####################
 # setup the Azure CLI
 #####################
@@ -67,7 +69,6 @@ time sudo apt-get install solc -y
 time sudo apt-get install nodejs-legacy
 
 # Fetch Genesis and Private Key
-cd $HOMEDIR
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/start-private-blockchain.sh
 
@@ -92,15 +93,15 @@ sudo npm install -g pm2
 #pm2 start app.json
 
 date
-geth init genesis.json
+geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
 echo "completed geth install $$"
 
 # configuration
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
  
-#geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
-geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
+geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
+#geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 
 echo "===== Prefunded Etehreum Account imported =====";
 

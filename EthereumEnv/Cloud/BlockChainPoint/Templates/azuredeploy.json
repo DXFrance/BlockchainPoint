@@ -364,6 +364,9 @@
       "tags": {
         "displayName": "Virtual Network"
       },
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('NetworkSecurityGroupName'))]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
