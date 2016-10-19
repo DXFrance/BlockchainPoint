@@ -31,7 +31,7 @@ function install_prerequisites()
     done
 
     log "Install software-properties-common ..."
-	until apt-get --yes install software-properties-common build-essential libssl-dev libffi-dev python-dev
+	until apt-get --yes install software-properties-common build-essential libssl-dev libffi-dev python-dev > /dev/null 2>&1
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
@@ -45,7 +45,7 @@ function install_prerequisites()
     done
 
     log "Install git ..."
-    until apt-get --yes install git
+    until apt-get --yes install git > /dev/null 2>&1
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
@@ -59,18 +59,22 @@ function install_prerequisites()
     done
 
     log "Install node ..."
-    until apt-get --yes install nodejs-legacy
+    until apt-get --yes install nodejs-legacy > /dev/null 2>&1
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
     done
 
 	log "Install npm ..."
-    until apt-get --yes install npm
+    until apt-get --yes install npm > /dev/null 2>&1
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
     done
+
+	log "Install azure-cli ..."
+	npm install azure-cli -g > /dev/null 2>&1
+	#update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 }
 
@@ -122,17 +126,10 @@ cd $HOMEDIR
 
 install_prerequisites
 
-#####################
-# setup the Azure CLI
-#####################
-npm install azure-cli -g
-update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 ####################
 # Setup Geth
 ####################
-sudo apt-get --yes install git
-apt-get install -y software-properties-common
 add-apt-repository -y ppa:ethereum/ethereum
 apt-get update
 apt-get install -y ethereum
@@ -157,7 +154,8 @@ npm install
 git clone https://github.com/cubedro/eth-netstats
 cd eth-netstats
 npm install
-WS_SECRET="eth-net-stats-has-a-secret" npm start
+WS_SECRET="eth-net-stats-has-a-secret"
+npm start
 
 #https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 
@@ -185,6 +183,6 @@ echo "===== Prefunded Etehreum Account imported =====";
 #start blockchain
 
 #sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
-sh "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}"  "${ETHEREUM_NODE_IDENTITY}"  </dev/null 2>&1 &
+bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}"  "${ETHEREUM_NODE_IDENTITY}"  </dev/null 2>&1 &
 
 echo "===== Started geth node =====";
