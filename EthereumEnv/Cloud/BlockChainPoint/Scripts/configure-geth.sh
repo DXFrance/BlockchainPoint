@@ -72,8 +72,8 @@ function install_prerequisites()
       sleep 2
     done
 
-	log "Install azure-cli ..."
-	npm install azure-cli -g > /dev/null 2>&1
+	#log "Install azure-cli ..."
+	#npm install azure-cli -g > /dev/null 2>&1
 	#update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 }
@@ -132,40 +132,20 @@ install_prerequisites
 ####################
 add-apt-repository -y ppa:ethereum/ethereum
 apt-get update
-apt-get install -y ethereum
+apt-get install -y ethereum  > /dev/null 2>&1
 
 ####################
 # Install sol compiler
 ####################
 add-apt-repository ppa:ethereum/ethereum -y
 apt-get update
-apt-get install solc -y
+apt-get install solc -y  > /dev/null 2>&1
 
 
 # Fetch Genesis and Private Key
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/start-private-blockchain.sh
 
-#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
-git clone https://github.com/ethersphere/eth-utils.git
-cd eth-utils
-npm install
-
-git clone https://github.com/cubedro/eth-netstats
-cd eth-netstats
-npm install
-WS_SECRET="eth-net-stats-has-a-secret"
-npm start
-
-#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
-
-git clone https://github.com/cubedro/eth-net-intelligence-api
-cd eth-net-intelligence-api
-npm install
-npm install -g pm2
-
-#after udpate of the app.json
-#pm2 start app.json
 
 date
 geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
@@ -186,3 +166,22 @@ echo "===== Prefunded Etehreum Account imported =====";
 bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}"  "${ETHEREUM_NODE_IDENTITY}"  </dev/null 2>&1 &
 
 echo "===== Started geth node =====";
+
+#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
+git clone https://github.com/ethersphere/eth-utils.git
+
+git clone https://github.com/cubedro/eth-netstats
+cd eth-netstats
+npm install
+export WS_SECRET="eth-net-stats-has-a-secret"
+npm start
+cd ..
+
+#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
+git clone https://github.com/cubedro/eth-net-intelligence-api
+cd eth-net-intelligence-api
+npm install
+npm install -g pm2
+cd ..
+#after udpate of the app.json
+#pm2 start app.json
