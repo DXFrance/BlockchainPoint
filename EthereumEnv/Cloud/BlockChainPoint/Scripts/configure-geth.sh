@@ -1,9 +1,75 @@
 #!/bin/bash
 
+function usage()
+ {
+    echo "INFO:"
+    echo "Usage:...."
+}
+
+function error_log()
+{
+    if [ "$?" != "0" ]; then
+        log "$1"
+        log "Deployment ends with an error" "1"
+        exit 1
+    fi
+}
+
+function log()
+{
+  mess="$(hostname): $1"
+  logger -t "${BASH_SCRIPT}" "${mess}"
+}
+
+function install_prerequisites()
+{
+    log "Update System ..."
+    until apt-get --yes update
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
+    log "Install software-properties-common ..."
+    until apt-get --yes install software-properties-common build-essential
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
+    log "Update System ..."
+    until apt-get --yes update
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
+    log "Install git ..."
+    until apt-get --yes install git
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
+    log "Install node ..."
+    until apt-get install nodejs-legacy
+
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
+	log "Install npm ..."
+	curl https://npmjs.org/install.sh | sudo sh
+
+}
+
+
 # print commands and arguments as they are executed
 set -x
 
 echo "initializing geth installation"
+usage
 date
 ps axjf
 
@@ -44,6 +110,8 @@ echo "ETHEREUM_NODE_IDENTITY: $ETHEREUM_NODE_IDENTITY"
 
 cd $HOMEDIR
 
+install_prerequisites
+
 #####################
 # setup the Azure CLI
 #####################
@@ -66,7 +134,6 @@ add-apt-repository ppa:ethereum/ethereum -y
 apt-get update
 apt-get install solc -y
 
-apt-get install nodejs-legacy
 
 # Fetch Genesis and Private Key
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
