@@ -47,26 +47,26 @@ cd $HOMEDIR
 #####################
 # setup the Azure CLI
 #####################
-time sudo npm install azure-cli -g
-time sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+npm install azure-cli -g
+update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 
 ####################
 # Setup Geth
 ####################
-time sudo apt-get --yes install git
-time sudo apt-get install -y software-properties-common
-time sudo add-apt-repository -y ppa:ethereum/ethereum
-time sudo apt-get update
-time sudo apt-get install -y ethereum
+sudo apt-get --yes install git
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:ethereum/ethereum
+apt-get update
+apt-get install -y ethereum
 
 ####################
 # Install sol compiler
 ####################
-time sudo add-apt-repository ppa:ethereum/ethereum -y
-time sudo apt-get update
-time sudo apt-get install solc -y
+add-apt-repository ppa:ethereum/ethereum -y
+apt-get update
+apt-get install solc -y
 
-time sudo apt-get install nodejs-legacy
+apt-get install nodejs-legacy
 
 # Fetch Genesis and Private Key
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
@@ -87,7 +87,7 @@ WS_SECRET="eth-net-stats-has-a-secret" npm start
 git clone https://github.com/cubedro/eth-net-intelligence-api
 cd eth-net-intelligence-api
 npm install
-sudo npm install -g pm2
+npm install -g pm2
 
 #after udpate of the app.json
 #pm2 start app.json
