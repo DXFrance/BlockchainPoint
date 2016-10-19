@@ -153,7 +153,7 @@
     "vmOsDiskName": "[concat(parameters('resourceNamePrefix'),'-os-')]",
     "vmDataDiskName": "[concat(parameters('resourceNamePrefix'),'-data-')]",
     "configExtensionScriptUrl": "https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-geth.sh",
-    "configExtensionScriptCmd": "sh configure-geth.sh",
+    "configExtensionScriptCmd": "bash configure-geth.sh",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "disablePasswordAuthentication": "true",
     "svcPlanName": "[concat(parameters('resourceNamePrefix'),'-HostingPlan')]",

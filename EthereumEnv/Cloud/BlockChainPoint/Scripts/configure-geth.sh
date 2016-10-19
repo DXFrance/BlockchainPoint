@@ -1,12 +1,12 @@
 #!/bin/bash
 
-usage()
+function usage()
 {
     echo "INFO:"
     echo "Usage:...."
 }
 
-error_log()
+function error_log()
 {
     if [ "$?" != "0" ]; then
         log "$1"
@@ -15,13 +15,13 @@ error_log()
     fi
 }
 
-log()
+function log()
 {
   mess="$(hostname): $1"
   logger -t "${BASH_SCRIPT}" "${mess}"
 }
 
-install_prerequisites()
+function install_prerequisites()
 {
     log "Update System ..."
     until apt-get --yes update
@@ -31,7 +31,7 @@ install_prerequisites()
     done
 
     log "Install software-properties-common ..."
-    until apt-get --yes install software-properties-common build-essential
+	until apt-get --yes install software-properties-common build-essential libssl-dev libffi-dev python-dev
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
@@ -59,14 +59,14 @@ install_prerequisites()
     done
 
     log "Install node ..."
-    until apt-get install nodejs-legacy
+    until apt-get --yes install nodejs-legacy
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
     done
 
 	log "Install npm ..."
-    until apt-get install npm
+    until apt-get --yes install npm
     do
       log "Lock detected on apt-get while install Try again..."
       sleep 2
