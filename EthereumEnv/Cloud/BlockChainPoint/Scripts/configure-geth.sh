@@ -173,6 +173,8 @@ git clone https://github.com/ethersphere/eth-utils.git
 git clone https://github.com/cubedro/eth-netstats
 cd eth-netstats
 npm install > /dev/null 2>&1
+npm install -g grunt-cli > /dev/null 2>&1
+grunt all > /dev/null 2>&1
 #export WS_SECRET="eth-net-stats-has-a-secret"
 #npm start
 cd ..
