@@ -35,6 +35,7 @@
     <None Include="Genesis\genesis.json" />
     <None Include="Netstats\app.json" />
     <None Include="README.md" />
+    <None Include="Scripts\configure-ethstats.sh" />
     <None Include="Scripts\configure-geth.sh" />
     <None Include="Scripts\start-manuel-nodekey.sh" />
     <None Include="Scripts\start-private-blockchain.sh" />
