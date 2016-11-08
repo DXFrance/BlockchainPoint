@@ -112,6 +112,9 @@ ETHEREUM_ACCOUNT_KEY_FILE="$HOMEDIR/ethereum-account-key-file"
 GETH_LOG_FILE_PATH="$HOMEDIR/blockchain.log"
 GETH_START_SCRIPT="$HOMEDIR/start-private-blockchain.sh"
 BLOCKCHAIN_DIR="chains/hackademy"
+ETHEREUM_STATS_FILE="configure-ethstats.sh"
+ETHEREUM_NETSTATS_DIR="eth-netstats"
+ETHEREUM_NETINTELLIGENCE_DIR="eth-net-intelligence-api"
 
 echo "User: $AZURE_USER"
 echo "User home dir: $HOMEDIR"
@@ -149,7 +152,7 @@ apt-get install solc -y  > /dev/null 2>&1
 # Fetch Genesis and Private Key
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Genesis/genesis.json
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/start-private-blockchain.sh
-
+wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-ethstats.sh
 
 date
 geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
@@ -175,23 +178,24 @@ echo "===== Started geth node =====";
 if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 
 	git clone https://github.com/cubedro/eth-netstats
-	cd eth-netstats
+	cd "$ETHEREUM_NETSTATS_DIR"
 	npm install > /dev/null 2>&1
 	npm install -g grunt-cli > /dev/null 2>&1
 	grunt all > /dev/null 2>&1
 	#WS_SECRET="eth-net-stats-has-a-secret" npm start
 	cd ..
 
+	cp "$ETHEREUM_STATS_FILE" "$ETHEREUM_NETINTELLIGENCE_DIR/$ETHEREUM_STATS_FILE" 
 	#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 	git clone https://github.com/cubedro/eth-net-intelligence-api
-	cd eth-net-intelligence-api
+	cd "$ETHEREUM_NETINTELLIGENCE_DIR"
 	npm install > /dev/null 2>&1
 	npm install -g pm2 > /dev/null 2>&1
 
 	#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
 	#git clone https://github.com/ethersphere/eth-utils.git
 
-	bash configure-ethstats.sh "{$ETHEREUM_MINING_NODES_NUMBER}" "{$VMNAME}" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
+	bash "{$ETHEREUM_STATS_FILE}" "{$ETHEREUM_MINING_NODES_NUMBER}" "{$VMNAME}" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
 
 	cd ..
 	#after udpate of the app.json
