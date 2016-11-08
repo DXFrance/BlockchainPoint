@@ -171,7 +171,7 @@
       "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "Ethereum Nodes Avaialbility Set"
+        "displayName": "Ethereum Nodes Availability Set"
       },
       "properties": {
         "PlatformFaultDomainCount": "[variables('faultDomainCount')]",
@@ -521,7 +521,7 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', parameters('ethereumMiningNodesNumber'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\" \"', copyindex(), '\"')]"
         }
       }
     }

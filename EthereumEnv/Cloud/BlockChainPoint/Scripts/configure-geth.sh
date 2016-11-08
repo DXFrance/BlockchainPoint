@@ -124,6 +124,7 @@ echo "ETHEREUM_ACCOUNT_KEY_FILE: $ETHEREUM_ACCOUNT_KEY_FILE"
 echo "GETH_LOG_FILE_PATH: $GETH_LOG_FILE_PATH"
 echo "ETHEREUM_MINING_NODES_NUMBER: $ETHEREUM_MINING_NODES_NUMBER"
 echo "ETHEREUM_NODE_IDENTITY: $ETHEREUM_NODE_IDENTITY"
+echo "ETHEREUM_NODE_NUMBER: $ETHEREUM_NODE_NUMBER"
 
 cd $HOMEDIR
 
@@ -171,7 +172,7 @@ bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHE
 echo "===== Started geth node =====";
 
 
-if [ {$ETHEREUM_NODE_NUMBER} -eq 0 ]; then
+if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 
 	git clone https://github.com/cubedro/eth-netstats
 	cd eth-netstats
