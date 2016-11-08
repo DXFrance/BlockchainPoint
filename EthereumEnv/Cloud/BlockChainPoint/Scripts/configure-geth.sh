@@ -101,7 +101,9 @@ ETHEREUM_ACCOUNT_PWD="${2}"
 ETHEREUM_ACCOUNT_KEY="${3}"
 ETHEREUM_NETWORK_ID="${4}"
 ETHEREUM_ACCOUNT_ADDRESS="${5}"
-ETHEREUM_NODE_IDENTITY="${6}"
+ETHEREUM_MINING_NODES_NUMBER="${6}"
+ETHEREUM_NODE_IDENTITY="${7}"
+ETHEREUM_NODE_NUMBER="${8}"
 
 HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
@@ -120,6 +122,7 @@ echo "ETHEREUM_NETWORK_ID: $ETHEREUM_NETWORK_ID"
 echo "ETHEREUM_ACCOUNT_PWD_FILE: $ETHEREUM_ACCOUNT_PWD_FILE"
 echo "ETHEREUM_ACCOUNT_KEY_FILE: $ETHEREUM_ACCOUNT_KEY_FILE"
 echo "GETH_LOG_FILE_PATH: $GETH_LOG_FILE_PATH"
+echo "ETHEREUM_MINING_NODES_NUMBER: $ETHEREUM_MINING_NODES_NUMBER"
 echo "ETHEREUM_NODE_IDENTITY: $ETHEREUM_NODE_IDENTITY"
 
 cd $HOMEDIR
@@ -167,23 +170,30 @@ bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHE
 
 echo "===== Started geth node =====";
 
-#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
-git clone https://github.com/ethersphere/eth-utils.git
 
-git clone https://github.com/cubedro/eth-netstats
-cd eth-netstats
-npm install > /dev/null 2>&1
-npm install -g grunt-cli > /dev/null 2>&1
-grunt all > /dev/null 2>&1
-#export WS_SECRET="eth-net-stats-has-a-secret"
-#npm start
-cd ..
+if [ {$ETHEREUM_NODE_NUMBER} -eq 0 ]; then
 
-#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
-git clone https://github.com/cubedro/eth-net-intelligence-api
-cd eth-net-intelligence-api
-npm install > /dev/null 2>&1
-npm install -g pm2 > /dev/null 2>&1
-cd ..
-#after udpate of the app.json
-#pm2 start app.json
+	git clone https://github.com/cubedro/eth-netstats
+	cd eth-netstats
+	npm install > /dev/null 2>&1
+	npm install -g grunt-cli > /dev/null 2>&1
+	grunt all > /dev/null 2>&1
+	#WS_SECRET="eth-net-stats-has-a-secret" npm start
+	cd ..
+
+	#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
+	git clone https://github.com/cubedro/eth-net-intelligence-api
+	cd eth-net-intelligence-api
+	npm install > /dev/null 2>&1
+	npm install -g pm2 > /dev/null 2>&1
+
+	#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
+	#git clone https://github.com/ethersphere/eth-utils.git
+
+	bash configure-ethstats.sh "{$ETHEREUM_MINING_NODES_NUMBER}" "{$VMNAME}" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
+
+	cd ..
+	#after udpate of the app.json
+	#pm2 start app.json
+
+fi

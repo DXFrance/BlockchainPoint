@@ -8,7 +8,7 @@
 # - <ws_secret> is the eth-netstats secret
 #
 
-# bash netstatconf.sh 3 Hackademy-Node http://localhost:3000 eth-net-stats-has-a-secret > app.json
+# bash configure-ethstats.sh 3 Hackademy-Node http://localhost:3000 eth-net-stats-has-a-secret > app.json
 
 N=$1
 shift

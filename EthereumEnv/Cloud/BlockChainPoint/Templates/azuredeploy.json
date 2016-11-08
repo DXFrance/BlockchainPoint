@@ -521,7 +521,7 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', parameters('ethereumMiningNodesNumber'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\" \"', copyindex(), '\"')]"
         }
       }
     }
