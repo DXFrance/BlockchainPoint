@@ -63,7 +63,11 @@ function resultHandler (err, result) {
 qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
-  contract = ChainPoint.at("0x770947bf54dad3de48ab62be1a05178c21afcd1c");
+  
+  //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
+  var address = "0xcf5e917dbbeb5f45ecc7cb666d902398ecd492ab";
+  contract = ChainPoint.at(address);
+
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
     console.log("CheckPoint!");
