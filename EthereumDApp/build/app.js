@@ -43593,13 +43593,13 @@ window.addEventListener('load', function() {
 
     // Use the provider from the config.                        
 
-    window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); 
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode2.westeurope.cloudapp.azure.com:8545')); 
 
   }                                                             
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
