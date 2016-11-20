@@ -191,7 +191,7 @@
         "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]"
       ],
       "properties": {
-        "serverFarmId": "[variables('svcPlanName')]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]"
       },
       "resources": [
         {
@@ -255,7 +255,7 @@
         "[resourceId('Microsoft.Web/Sites', variables('webAppName'))]"
       ],
       "properties": {
-        "serverFarmId": "[variables('svcPlanName')]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('svcPlanName'))]"
       },
       "resources": [
         {

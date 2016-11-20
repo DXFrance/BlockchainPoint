@@ -185,7 +185,7 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#WS_SECRET="eth-net-stats-has-a-secret" npm start
 	cd ..
 
-	cp "$ETHEREUM_STATS_FILE" "$ETHEREUM_NETINTELLIGENCE_DIR/$ETHEREUM_STATS_FILE" 
+	cp "$HOMEDIR/$ETHEREUM_STATS_FILE" "$HOMEDIR/$ETHEREUM_NETINTELLIGENCE_DIR/$ETHEREUM_STATS_FILE" 
 	#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 	git clone https://github.com/cubedro/eth-net-intelligence-api
 	cd "$ETHEREUM_NETINTELLIGENCE_DIR"
