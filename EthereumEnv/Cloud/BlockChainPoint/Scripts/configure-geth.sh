@@ -58,6 +58,13 @@ function install_prerequisites()
       sleep 2
     done
 
+	log "Install npm ..."
+    until apt-get --yes install npm > /dev/null 2>&1
+    do
+      log "Lock detected on apt-get while install Try again..."
+      sleep 2
+    done
+
     log "Install node ..."
     until curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - > /dev/null 2>&1
     do
@@ -71,12 +78,6 @@ function install_prerequisites()
       sleep 2
     done
 
-	log "Install npm ..."
-    until apt-get --yes install npm > /dev/null 2>&1
-    do
-      log "Lock detected on apt-get while install Try again..."
-      sleep 2
-    done
 
 	#log "Install azure-cli ..."
 	#npm install azure-cli -g > /dev/null 2>&1
