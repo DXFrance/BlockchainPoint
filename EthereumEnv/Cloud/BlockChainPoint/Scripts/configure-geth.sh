@@ -59,9 +59,15 @@ function install_prerequisites()
     done
 
     log "Install node ..."
-    until apt-get --yes install nodejs-legacy > /dev/null 2>&1
+    until curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - > /dev/null 2>&1
     do
-      log "Lock detected on apt-get while install Try again..."
+      log "Lock detected on curl while install Try again..."
+      sleep 2
+    done
+
+    until sudo apt-get install -y nodejs > /dev/null 2>&1
+    do
+      log "Lock detected on apt-get install -y nodejs while install Try again..."
       sleep 2
     done
 
@@ -195,7 +201,7 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
 	#git clone https://github.com/ethersphere/eth-utils.git
 
-	bash "{$ETHEREUM_STATS_FILE}" "{$ETHEREUM_MINING_NODES_NUMBER}" "{$VMNAME}" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
+	bash "./../{$ETHEREUM_STATS_FILE}" "{$ETHEREUM_MINING_NODES_NUMBER}" "{$VMNAME}" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
 
 	cd ..
 	#after udpate of the app.json
