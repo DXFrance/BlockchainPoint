@@ -202,7 +202,11 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#https://github.com/ethereum/go-ethereum/wiki/Setting-up-monitoring-on-local-cluster
 	#git clone https://github.com/ethersphere/eth-utils.git
 
-	bash "./../$ETHEREUM_STATS_FILE" "$ETHEREUM_MINING_NODES_NUMBER" "$VMNAME" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
+	len_vm_name=${#VMNAME}
+	len_minus_2=$((len_vm_name-2))
+	name_prefix="${VMNAME:0:$len_minus_2}"
+
+	bash "./../$ETHEREUM_STATS_FILE" "$ETHEREUM_MINING_NODES_NUMBER" "$name_prefix" "http://localhost:3000" "eth-net-stats-has-a-secret" > app.json
 
 	cd ..
 	#after udpate of the app.json
