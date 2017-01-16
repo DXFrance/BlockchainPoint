@@ -43599,7 +43599,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [Migrations,ChainPoint].forEach(function(contract) {         
+  [ChainPoint,Migrations].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
