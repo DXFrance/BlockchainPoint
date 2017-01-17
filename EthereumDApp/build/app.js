@@ -43688,6 +43688,8 @@ $(document).ready(function() {
     console.log(result.args.username);
     console.log(result.args.step.toString());
     DOM_pushCheckpointDone(result.args.username, result.args.step.toString());
+    // when the transaction mining occurs it's not necessary to broadcast the info to the EthereumDApp
+    // because they should already be notified through the ethereum protocol
     //socket.emit('checkpoint_mined', {username: result.args.username, step: result.args.step.toString()});
   });
 });
@@ -43705,6 +43707,8 @@ function sendToBlockchain(id, username, step) {
   var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
 
   DOM_pushCheckpoint(username, step);
+  // in order to notify any EthereumDApp that a new checkpoint is beginning
+  // using a socket with EthereumDApi that will browser to all of the connected EthereumDApp applications
   socket.emit('checkpoint_begin', {username: username, step: step});
   contract.check(id, username, step, {from: account_production, gas: 200000}).then(function(tx) {
     console.log("Transaction successful! " + tx);
