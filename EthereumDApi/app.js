@@ -132,13 +132,16 @@ function statPath(path) {
 io.on('connection', function (socket) {
   socket.emit('user_complete', user_complete);
   socket.on('checkpoint_begin', function(data) {
+  // in order to notify any EthereumDApp that a new checkpoint is beginning
     socket.broadcast.emit('checkpoint_begin', data);
     console.log('checkpoint_begin');
   });
-  socket.on('checkpoint_mined', function(data) {
-    socket.broadcast.emit('checkpoint_mined', data);
-    console.log('checkpoint_mined');
-  });
+  // when the transaction mining occurs it's not necessary to broadcast the info to the EthereumDApp
+  // because they should already be notified through the ethereum protocol
+  //socket.on('checkpoint_mined', function(data) {
+  //  socket.broadcast.emit('checkpoint_mined', data);
+  //  console.log('checkpoint_mined');
+  //});
 });
 
 function getUser(id) {
