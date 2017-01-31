@@ -132,6 +132,7 @@
     "subnetName": "[concat(parameters('resourceNamePrefix'),'SubNet')]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "subnetAddressPrefix": "10.0.0.0/24",
+    "subnetRoot": "[concat( split(variables('subnetAddressPrefix'), '.')[0], '.', split(variables('subnetAddressPrefix'), '.')[1], '.', split(variables('subnetAddressPrefix'), '.')[2])]",
     "pIPLoadBalancerAddressName": "[concat(parameters('resourceNamePrefix'),'-PIP-LB')]",
     "pIPEthereumNodeAddressNamePrefix": "[concat(parameters('resourceNamePrefix'),'-PIP-')]",
     "pIPAddressType": "Dynamic",
@@ -409,7 +410,8 @@
           {
             "name": "[concat(variables('nicNamePrefix'), 'Config', copyindex())]",
             "properties": {
-              "privateIPAllocationMethod": "Dynamic",
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[concat(variables('subnetRoot'), '.',add(copyindex(),4) )]",
               "publicIPAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pIPEthereumNodeAddressNamePrefix'), copyindex()))]"
               },
