@@ -523,7 +523,7 @@
           "fileUris": [
             "[variables('configExtensionScriptUrl')]"
           ],
-          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', parameters('ethereumMiningNodesNumber'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\" \"', copyindex(), '\"')]"
+          "commandToExecute": "[concat(variables('configExtensionScriptCmd'),' \"', parameters('adminUsername'), '\" \"', parameters('ethereumAccountPassword'),'\" \"', parameters('ethereumAccountKey'),'\" \"', parameters('ethereumNetworkID'), '\" \"', parameters('ethereumAccountAddress'), '\" \"', parameters('ethereumMiningNodesNumber'), '\" \"', variables('ethereumNodeIdPrefix'), copyindex(), '\" \"', copyindex(), '\" \"', concat(variables('subnetRoot'),'.',add(copyindex(),4) ),'\"')]"
         }
       }
     }
