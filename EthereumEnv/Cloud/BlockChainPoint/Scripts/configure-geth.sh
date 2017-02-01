@@ -177,6 +177,9 @@ geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" acc
 echo "===== Prefunded Etehreum Account imported =====";
 
 #start blockchain
+#resync node clock
+#an accurate clock is required to participate in the Ethereum network
+ntpdate -s time.nist.gov
 
 #sh "$GETH_START_SCRIPT" "$ETHEREUM_NETWORK_ID" </dev/null >"$GETH_LOG_FILE_PATH" 2>&1 &
 bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHEREUM_ACCOUNT_ADDRESS}" "${ETHEREUM_ACCOUNT_PWD_FILE}"  "${ETHEREUM_NODE_IDENTITY}"  "${ETHEREUM_NODE_IP}"  </dev/null 2>&1 &
