@@ -175,7 +175,7 @@ printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
 geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 #geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 
-echo "===== Prefunded Etehreum Account imported =====";
+echo "===== Prefunded Ethreum Account imported =====";
 
 #start blockchain
 #resync node clock
@@ -218,6 +218,15 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#pm2 start app.json
 
 fi
+
+GETH_IPC="/home/$AZURE_USER/$BLOCKCHAIN_DIR/geth.ipc"
+sleep 2
+log "Gething Ethereum enode ..."
+until [$GETH_CFG]
+do
+    log "$GETH_IPC file not found Try again..."
+    sleep 2
+done
 
 ENODE=`geth --exec "admin.nodeInfo" attach ipc:$BLOCKCHAIN_DIR/geth.ipc |grep "enode:"|sed -r 's:.*"([^"]+)".*:\1:'`
 IP_ADDR=`ifconfig|grep "inet addr"|grep -v "127.0.0.1"|sed -r 's:[^0-9.]*([0-9.]+).*:\1:'`
