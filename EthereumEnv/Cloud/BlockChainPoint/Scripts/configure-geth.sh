@@ -222,7 +222,7 @@ fi
 GETH_IPC="/home/$AZURE_USER/$BLOCKCHAIN_DIR/geth.ipc"
 sleep 2
 log "Gething Ethereum enode ..."
-until [$GETH_CFG]
+until [-f $GETH_CFG]
 do
     log "$GETH_IPC file not found Try again..."
     sleep 2
