@@ -5323,8 +5323,8 @@ y=m.length;if(w>y&&m.unshift(0),r(_,m,w,u),w=_.length,-1==f)for(;n(D,_,F,w)<1;)d
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.__contracts__ = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = {
-  "Migrations": require("C:\\dev\\_GIThub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
   "ChainPoint": require("C:\\dev\\_GIThub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js"),
+  "Migrations": require("C:\\dev\\_GIThub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
 };
 },{"C:\\dev\\_GIThub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js":221,"C:\\dev\\_GIThub\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js":222}],2:[function(require,module,exports){
 var asn1 = exports;
@@ -43599,7 +43599,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
@@ -43677,8 +43677,8 @@ qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
   
-  var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  //var address = "0xcf5e917dbbeb5f45ecc7cb666d902398ecd492ab";
+  //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
+  var address = " 0x2a8885b1a9b91b53edd0fd03da16166324ce6566";
   contract = ChainPoint.at(address);
 
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
