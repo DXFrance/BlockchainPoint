@@ -197,9 +197,9 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#WS_SECRET="eth-net-stats-has-a-secret" npm start
 	cd ..
 
-	cp "$HOMEDIR/$ETHEREUM_STATS_FILE" "$HOMEDIR/$ETHEREUM_NETINTELLIGENCE_DIR/$ETHEREUM_STATS_FILE" 
 	#https://ethereum.gitbooks.io/frontier-guide/content/netstats.html
 	git clone https://github.com/cubedro/eth-net-intelligence-api
+	cp "$HOMEDIR/$ETHEREUM_STATS_FILE" "$HOMEDIR/$ETHEREUM_NETINTELLIGENCE_DIR/$ETHEREUM_STATS_FILE" 
 	cd "$ETHEREUM_NETINTELLIGENCE_DIR"
 	npm install > /dev/null 2>&1
 	npm install -g pm2 > /dev/null 2>&1
@@ -222,10 +222,11 @@ fi
 GETH_IPC="/home/$AZURE_USER/$BLOCKCHAIN_DIR/geth.ipc"
 sleep 2
 log "Gething Ethereum enode ..."
-until [-f $GETH_CFG]
+
+while [ ! -f "$GETH_IPC" ]
 do
-    log "$GETH_IPC file not found Try again..."
-    sleep 2
+  log "$GETH_IPC file not found Try again..."
+  sleep 2
 done
 
 ENODE=`geth --exec "admin.nodeInfo" attach ipc:$BLOCKCHAIN_DIR/geth.ipc |grep "enode:"|sed -r 's:.*"([^"]+)".*:\1:'`
