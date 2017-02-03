@@ -117,6 +117,7 @@ HOMEDIR="/home/$AZURE_USER"
 VMNAME=`hostname`
 ETHEREUM_ACCOUNT_PWD_FILE="$HOMEDIR/ethereum-account-pwd-file"
 ETHEREUM_ACCOUNT_KEY_FILE="$HOMEDIR/ethereum-account-key-file"
+ETHEREUM_ENODE_FILE="$HOMEDIR/ethereum-enode-file"
 GETH_LOG_FILE_PATH="$HOMEDIR/blockchain.log"
 GETH_START_SCRIPT="$HOMEDIR/start-private-blockchain.sh"
 BLOCKCHAIN_DIR="chains/hackademy"
@@ -186,7 +187,6 @@ bash "${GETH_START_SCRIPT}" "${ETHEREUM_NETWORK_ID}" "${BLOCKCHAIN_DIR}" "${ETHE
 
 echo "===== Started geth node =====";
 
-
 if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 
 	git clone https://github.com/cubedro/eth-netstats
@@ -218,3 +218,10 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 	#pm2 start app.json
 
 fi
+
+ENODE=`geth --exec "admin.nodeInfo" attach ipc:$BLOCKCHAIN_DIR/geth.ipc |grep "enode:"|sed -r 's:.*"([^"]+)".*:\1:'`
+IP_ADDR=`ifconfig|grep "inet addr"|grep -v "127.0.0.1"|sed -r 's:[^0-9.]*([0-9.]+).*:\1:'`
+SED_ARG="-r 's/\[::\]/${IP_ADDR}/'"
+ENODE=`echo $ENODE|eval sed "$SED_ARG"`
+
+printf "%s\n" "$ENODE" >> "${ETHEREUM_ENODE_FILE}"
