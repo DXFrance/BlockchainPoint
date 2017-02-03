@@ -220,10 +220,10 @@ if [ $ETHEREUM_NODE_NUMBER -eq 0 ]; then
 fi
 
 GETH_IPC="/home/$AZURE_USER/$BLOCKCHAIN_DIR/geth.ipc"
-sleep 2
+
 log "Gething Ethereum enode ..."
 
-while [ ! -f "$GETH_IPC" ]
+while [ ! -S "$GETH_IPC" ]
 do
   log "$GETH_IPC file not found Try again..."
   sleep 2
