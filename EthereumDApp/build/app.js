@@ -5792,9 +5792,9 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         "type": "event"
       }
     },
-    "updated_at": 1486164012293,
+    "updated_at": 1488493311977,
     "links": {},
-    "address": "0x95f6e65ab7b6b619c4c1b08bfdb29b09bba44c3e"
+    "address": "0x770947bf54dad3de48ab62be1a05178c21afcd1c"
   },
   "default": {
     "abi": [
@@ -6455,8 +6455,8 @@ var SolidityEvent = require("web3/lib/web3/event.js");
     ],
     "unlinked_binary": "0x606060405260008054600160a060020a03191633179055610130806100246000396000f3606060405260e060020a60003504630900f010811461003c578063445df0ac146100c05780638da5cb5b146100c9578063fdacd576146100db575b005b61003a60043560008054600160a060020a039081163390911614156100bc57604080516001547ffdacd576000000000000000000000000000000000000000000000000000000008252600482015290518392600160a060020a0384169263fdacd5769260248281019392829003018183876161da5a03f115610002575050505b5050565b61010160015481565b610113600054600160a060020a031681565b61003a60043560005433600160a060020a03908116911614156100fe5760018190555b50565b60408051918252519081900360200190f35b60408051600160a060020a03929092168252519081900360200190f3",
     "events": {},
-    "updated_at": 1486164012321,
-    "address": "0xd00df624ea8ef45235ae8d6baea0e92c5cf3bc12",
+    "updated_at": 1488493311944,
+    "address": "0xde76f02594926468b06da993eb19dbbd4af792e0",
     "links": {}
   },
   "default": {
@@ -6649,8 +6649,8 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
 },{"web3":173,"web3/lib/web3/event.js":200}],3:[function(require,module,exports){
 module.exports = {
-  "Migrations": require("C:\\DEV\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
   "ChainPoint": require("C:\\DEV\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js"),
+  "Migrations": require("C:\\DEV\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
 };
 },{"C:\\DEV\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js":1,"C:\\DEV\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js":2}],4:[function(require,module,exports){
 var asn1 = exports;
@@ -43599,7 +43599,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
@@ -43677,8 +43677,8 @@ qr.decodeFromCamera(video, resultHandler);
 
 $(document).ready(function() {
   
-  //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  var address = "0x95f6e65ab7b6b619c4c1b08bfdb29b09bba44c3e";
+  var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
+  //var address = "0x95f6e65ab7b6b619c4c1b08bfdb29b09bba44c3e";
   contract = ChainPoint.at(address);
 
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
