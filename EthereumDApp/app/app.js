@@ -91,7 +91,7 @@ function sendToBlockchain(id, username, step) {
   var account_testrpc = "0x5dfe7f17215fd524dd7555e0dd0c08c410c9395c";
   var account_production = "0xd5e6350e57c075cf756daa4bf16e6bd7190dd0b2";
   var account_devthomas = "0x87b3f6def4d451c41be733b8924da66dea0caed4";
-  var account_bletchley = "0x708C77773a1c379aA70B0402Fa0dF12A9B00D76A";
+  var account_bletchley = "1fc1a8aa07ae34d68d7e0f2f7d912406503a2013";
 
   DOM_pushCheckpoint(username, step);
   // in order to notify any EthereumDApp that a new checkpoint is beginning

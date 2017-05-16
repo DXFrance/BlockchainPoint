@@ -30,8 +30,8 @@ module.exports = {
       network_id: "default"
     },
     "consortium": {
-      network_id: 180666,        // Consortium ethereum template
-      host: "hackme-sg.northeurope.cloudapp.azure.com"
+      network_id: 08041971,        // Consortium ethereum template
+      host: "bdfrlejdd.northeurope.cloudapp.azure.com:8545"
     }
   }
 };
