@@ -165,17 +165,19 @@ wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumE
 wget https://raw.githubusercontent.com/DXFrance/BlockchainPoint/master/EthereumEnv/Cloud/BlockChainPoint/Scripts/configure-ethstats.sh
 
 date
-geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
-echo "completed geth install $$"
 
 # configuration
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
  
+echo "===== Prefunded Ethereum Account import =====";
 geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 #geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 
-echo "===== Prefunded Ethreum Account imported =====";
+echo "===== Genesis Intialization =====";
+rm -rf {$BLOCKCHAIN_DIR}/geth/chaindata
+geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
+echo "completed geth install $$"
 
 #start blockchain
 #resync node clock

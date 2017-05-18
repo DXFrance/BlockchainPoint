@@ -30,7 +30,7 @@ module.exports = {
       network_id: "default"
     },
     "consortium": {
-      network_id: 08041971,        // Consortium ethereum template
+      network_id: 8041971,        // Consortium ethereum template
       host: "bdfrlejdd.northeurope.cloudapp.azure.com:8545"
     }
   }
