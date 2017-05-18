@@ -170,7 +170,7 @@ date
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
 
-sed -e 's/ETHEREUM_NETWORK_ID/${ETHEREUM_NETWORK_ID}/g' -e 's/ETHEREUM_ACCOUNT_ADDRESS/"${ETHEREUM_ACCOUNT_ADDRESS}"/g' genesis.json
+sed -i -e 's/ETHEREUM_NETWORK_ID/${ETHEREUM_NETWORK_ID}/g' -e 's/ETHEREUM_ACCOUNT_ADDRESS/"${ETHEREUM_ACCOUNT_ADDRESS}"/g' genesis.json
 
 echo "===== Genesis Intialization =====";
 rm -rf {$BLOCKCHAIN_DIR}/geth/chaindata
