@@ -169,15 +169,15 @@ date
 # configuration
 printf "${ETHEREUM_ACCOUNT_KEY}" >> "${ETHEREUM_ACCOUNT_KEY_FILE}"
 printf "${ETHEREUM_ACCOUNT_PWD}" >> "${ETHEREUM_ACCOUNT_PWD_FILE}"
- 
-echo "===== Prefunded Ethereum Account import =====";
-geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
-#geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 
 echo "===== Genesis Intialization =====";
 rm -rf {$BLOCKCHAIN_DIR}/geth/chaindata
 geth --datadir "${BLOCKCHAIN_DIR}" init genesis.json
 echo "completed geth install $$"
+
+echo "===== Prefunded Ethereum Account import =====";
+geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" --datadir "${BLOCKCHAIN_DIR}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
+#geth --password "${ETHEREUM_ACCOUNT_PWD_FILE}" account import "${ETHEREUM_ACCOUNT_KEY_FILE}" 
 
 #start blockchain
 #resync node clock
