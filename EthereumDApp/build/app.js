@@ -5323,8 +5323,8 @@ y=m.length;if(w>y&&m.unshift(0),r(_,m,w,u),w=_.length,-1==f)for(;n(D,_,F,w)<1;)d
 
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.__contracts__ = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = {
-  "Migrations": require("C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
   "ChainPoint": require("C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js"),
+  "Migrations": require("C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js"),
 };
 },{"C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\ChainPoint.sol.js":221,"C:\\dev\\_GITHUB\\BlockchainPoint\\EthereumDApp\\build\\contracts\\Migrations.sol.js":222}],2:[function(require,module,exports){
 var asn1 = exports;
@@ -43775,13 +43775,13 @@ window.addEventListener('load', function() {
 
     // Use the provider from the config.                        
 
-    window.web3 = new Web3(new Web3.providers.HttpProvider('http://bdfrlejdd.northeurope.cloudapp.azure.com:8545:8545')); 
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode0.westeurope.cloudapp.azure.com:8545')); 
 
   }                                                             
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 

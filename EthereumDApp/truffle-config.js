@@ -23,7 +23,7 @@ module.exports = {
     },
     "production": {
       network_id: 180666,        // Custom ethereum template
-      host: "hackminingnode0.northeurope.cloudapp.azure.com", // domain of ethereum client pointing to live network
+      host: "hackminingnode0.westeurope.cloudapp.azure.com", // domain of ethereum client pointing to live network
       port: 8545
     },
     "development": {
