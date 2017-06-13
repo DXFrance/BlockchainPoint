@@ -43775,7 +43775,7 @@ window.addEventListener('load', function() {
 
     // Use the provider from the config.                        
 
-    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode0.westeurope.cloudapp.azure.com:8545')); 
+    window.web3 = new Web3(new Web3.providers.HttpProvider('http://hackminingnode1.westeurope.cloudapp.azure.com:8545')); 
 
   }                                                             
 
