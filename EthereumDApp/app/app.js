@@ -67,6 +67,10 @@ $(document).ready(function() {
   //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
   //var address = "0xc0b219ef87c002cfe20cd5a554e9e66a610c5f1e";
   //contract = ChainPoint.at(address);
+  console.log("ChainPoint.address");
+  console.log(ChainPoint.address);
+  
+  
   contract = ChainPoint.at(ChainPoint.address);
   
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
