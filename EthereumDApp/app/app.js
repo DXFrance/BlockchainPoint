@@ -65,13 +65,13 @@ qr.decodeFromCamera(video, resultHandler);
 $(document).ready(function() {
   
   //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  //var address = "0xc0b219ef87c002cfe20cd5a554e9e66a610c5f1e";
-  //contract = ChainPoint.at(address);
-  console.log("ChainPoint.address");
-  console.log(ChainPoint.address);
+  var address = "0x43ac1ecbce3cd44dfe9733398dbce2e15ee6f82e";
+  contract = ChainPoint.at(address);
+  //console.log("ChainPoint.address");
+  //console.log(ChainPoint.address);
   
   
-  contract = ChainPoint.at(ChainPoint.address);
+  //contract = ChainPoint.at(ChainPoint.address);
   
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
   logs.watch(function(error, result) {
