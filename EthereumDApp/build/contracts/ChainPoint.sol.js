@@ -468,9 +468,9 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         "type": "event"
       }
     },
-    "updated_at": 1522659116751,
+    "updated_at": 1523071639094,
     "links": {},
-    "address": "0x12236afd2aeff77330add8a7aca6af383ea3c19f"
+    "address": "0x952f99f37781ecb5f31ed6623323263ac7eaa0ea"
   },
   "8041971": {
     "abi": [

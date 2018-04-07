@@ -42711,9 +42711,9 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         "type": "event"
       }
     },
-    "updated_at": 1522659116751,
+    "updated_at": 1523071639094,
     "links": {},
-    "address": "0x12236afd2aeff77330add8a7aca6af383ea3c19f"
+    "address": "0x952f99f37781ecb5f31ed6623323263ac7eaa0ea"
   },
   "8041971": {
     "abi": [
@@ -43497,8 +43497,8 @@ var SolidityEvent = require("web3/lib/web3/event.js");
     ],
     "unlinked_binary": "0x606060405260008054600160a060020a03191633179055610130806100246000396000f3606060405260e060020a60003504630900f010811461003c578063445df0ac146100c05780638da5cb5b146100c9578063fdacd576146100db575b005b61003a60043560008054600160a060020a039081163390911614156100bc57604080516001547ffdacd576000000000000000000000000000000000000000000000000000000008252600482015290518392600160a060020a0384169263fdacd5769260248281019392829003018183876161da5a03f115610002575050505b5050565b61010160015481565b610113600054600160a060020a031681565b61003a60043560005433600160a060020a03908116911614156100fe5760018190555b50565b60408051918252519081900360200190f35b60408051600160a060020a03929092168252519081900360200190f3",
     "events": {},
-    "updated_at": 1522659116756,
-    "address": "0x70c3cc9d42d10d6d60ff8aadc8a385797cf1a57d",
+    "updated_at": 1523071639111,
+    "address": "0xcb5aac21a53593263bcb329c735ce4ba6278fcd7",
     "links": {}
   },
   "8041971": {
@@ -43781,7 +43781,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
@@ -43860,7 +43860,7 @@ qr.decodeFromCamera(video, resultHandler);
 $(document).ready(function() {
   
   //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  var address = "0x12236afd2aeff77330add8a7aca6af383ea3c19f";
+  var address = "0x952f99f37781ecb5f31ed6623323263ac7eaa0ea";
   contract = ChainPoint.at(address);
 
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
