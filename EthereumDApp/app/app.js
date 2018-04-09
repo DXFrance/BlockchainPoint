@@ -65,7 +65,7 @@ qr.decodeFromCamera(video, resultHandler);
 $(document).ready(function() {
   
   //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  var address = "0x952f99f37781ecb5f31ed6623323263ac7eaa0ea";
+  var address = "0x49c365605ae7282d09ae32d35872af69d5f9a5ff";
   contract = ChainPoint.at(address);
 
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
