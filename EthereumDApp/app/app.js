@@ -95,7 +95,7 @@ function sendToBlockchain(id, username, step) {
 
   DOM_pushCheckpoint(username, step);
   // in order to notify any EthereumDApp that a new checkpoint is beginning
-  // using a socket with EthereumDApi that will browser to all of the connected EthereumDApp applications
+  // using a socket with EthereumDApi that will broacdast to all of the connected EthereumDApp applications
   socket.emit('checkpoint_begin', {username: username, step: step});
   contract.check(id, username, step, {from: account_production, gas: 200000}).then(function(tx) {
     console.log("Transaction successful! " + tx);
