@@ -111,7 +111,7 @@ var Web3 = require('web3');
 
 var abi = ChainPoint.all_networks['default'].abi;
 //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-var address = " 0xd00cc63319bad351fcd62e11b023fec9c06ad810";
+var address = " 0x16796d9d93db59a7496cb6ccd886a2088e232e81";
 
 var web3 = new Web3(new Web3.providers.HttpProvider("http://hackminingnode0.westeurope.cloudapp.azure.com:8545"));
 //var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
