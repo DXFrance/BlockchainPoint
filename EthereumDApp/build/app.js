@@ -43781,7 +43781,7 @@ window.addEventListener('load', function() {
 
                                                                 
 
-  [ChainPoint,Migrations].forEach(function(contract) {         
+  [Migrations,ChainPoint].forEach(function(contract) {         
 
     contract.setProvider(window.web3.currentProvider);          
 
@@ -43860,7 +43860,7 @@ qr.decodeFromCamera(video, resultHandler);
 $(document).ready(function() {
   
   //var address = "0x770947bf54dad3de48ab62be1a05178c21afcd1c";
-  var address = " 0x16796d9d93db59a7496cb6ccd886a2088e232e81";
+  var address = "0x16796d9d93db59a7496cb6ccd886a2088e232e81";
   contract = ChainPoint.at(address);
 
   logs = contract.CheckPointAchieved({fromBlock: 'latest'});
